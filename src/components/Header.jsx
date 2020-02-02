@@ -7,16 +7,15 @@ const StyledHeader = styled.header`
     width: 100vw;
     padding: 5px;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 `;
 
 const Header = () => (
-    <StyledHeader>
-        <SearchBar />
-        {
-            //<Navigation />
-        }
-    </StyledHeader>
+  <StyledHeader>
+    <SearchBar />
+    <Navigation />
+  </StyledHeader>
 );
 
 export default Header;
