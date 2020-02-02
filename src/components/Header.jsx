@@ -5,14 +5,17 @@ import Navigation from './Navigation';
 
 const StyledHeader = styled.header`
     width: 100vw;
-    height: 20vh;
-    background-color: red;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
 `;
 
 const Header = () => (
     <StyledHeader>
         <SearchBar />
-        <Navigation />
+        {
+            //<Navigation />
+        }
     </StyledHeader>
 );
 
