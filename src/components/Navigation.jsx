@@ -11,7 +11,7 @@ const Nav = styled.nav`
     width: 100%;
     display: flex;
     justify-content: space-between;
-    margin: 10px 0;
+    margin-top: 10px;
     padding: 0 10px;
 `;
 
@@ -57,18 +57,18 @@ const StyledProfileIcon = styled(ProfileIcon)`
 `;
 
 const Navigation = () => (
-  <Nav>
-    <NavLink exact to="/" activeClassName="selected">
-      <StyledHomeIcon />
-    </NavLink>
-    <NavLink to="/discover" activeClassName="selected">
-      <StyledGlobeIcon />
-    </NavLink>
+    <Nav>
+        <NavLink exact to="/" activeClassName="selected">
+            <StyledHomeIcon />
+        </NavLink>
+        <NavLink to="/discover" activeClassName="selected">
+            <StyledGlobeIcon />
+        </NavLink>
 
-    <StyledNewPostIcon />
-    <StyledMessegeIcon />
-    <StyledProfileIcon />
-  </Nav>
+        <StyledNewPostIcon />
+        <StyledMessegeIcon />
+        <StyledProfileIcon />
+    </Nav>
 );
 
 export default Navigation;
