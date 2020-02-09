@@ -64,10 +64,15 @@ const Navigation = () => (
         <NavLink to="/discover" activeClassName="selected">
             <StyledGlobeIcon />
         </NavLink>
-
-        <StyledNewPostIcon />
-        <StyledMessegeIcon />
-        <StyledProfileIcon />
+        <NavLink to="/create_post" activeClassName="selected">
+            <StyledNewPostIcon />
+        </NavLink>
+        <NavLink to="/messeges" activeClassName="selected">
+            <StyledMessegeIcon />
+        </NavLink>
+        <NavLink to="/profile" activeClassName="selected">
+            <StyledProfileIcon />
+        </NavLink>
     </Nav>
 );
 
