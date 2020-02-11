@@ -1,19 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ReactComponent as ProfileIcon } from '../images/user.svg';
+import Avatar from './Avatar';
 import { ReactComponent as LikeIcon } from '../images/like.svg';
 import { ReactComponent as CommentIcon } from '../images/comment.svg';
 
-const Avatar = styled(ProfileIcon)`
-    width: 32px;
-    height: 32px;
+const StyledPostAvatar = styled(Avatar)`
     justify-self: center;
     grid-area: avatar;
 `;
 
 const Name = styled.p`
     margin: 0;
-
     grid-area: userName;
 `;
 
@@ -66,17 +63,17 @@ const StyledArticle = styled.article`
         'likes likesNumber comments commentsNumber .';
 `;
 
-const Post = ({ userId, body }) => (
-  <StyledArticle>
-    <Avatar />
-    <Name>John Smith</Name>
-    <Date>1 hour ago</Date>
-    <Content>{body}</Content>
-    <Like />
-    <LikesNumber>60</LikesNumber>
-    <Comment />
-    <CommentsNumber>10</CommentsNumber>
-  </StyledArticle>
+const Post = ({ userId, body, openCommentsSection }) => (
+    <StyledArticle>
+        <StyledPostAvatar small />
+        <Name>John Smith</Name>
+        <Date>1 hour ago</Date>
+        <Content>{body}</Content>
+        <Like />
+        <LikesNumber>60</LikesNumber>
+        <Comment onClick={openCommentsSection} />
+        <CommentsNumber>10</CommentsNumber>
+    </StyledArticle>
 );
 
 export default Post;

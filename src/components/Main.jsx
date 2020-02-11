@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import Post from './Post';
+import PostsList from './PostsList';
 
 const url = 'https://jsonplaceholder.typicode.com/posts';
 
@@ -13,22 +13,6 @@ const StyledSection = styled.section`
 
 const StyledH2 = styled.h2`
     margin: 0;
-`;
-
-const StyledUl = styled.ul`
-    width: 100%;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-`;
-
-const StyledLi = styled.li`
-    width: 100%;
-    margin: 5px 0;
 `;
 
 const Main = () => {
@@ -50,15 +34,7 @@ const Main = () => {
     return (
         <StyledSection>
             <StyledH2>What's new</StyledH2>
-            <StyledUl>
-                {posts
-                    ? posts.map(post => (
-                          <StyledLi key={post.id}>
-                              <Post body={post.body} user={post.userId} />
-                          </StyledLi>
-                      ))
-                    : null}
-            </StyledUl>
+            <PostsList posts={posts} />
         </StyledSection>
     );
 };

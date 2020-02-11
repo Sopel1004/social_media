@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 const StyledSection = styled.section`
@@ -29,12 +29,16 @@ const StyledTextarea = styled.textarea`
 `;
 
 const StyledButton = styled.button`
-    width: 100px;
+    width: 50%;
     padding: 10px;
     border: none;
     border-radius: 20px;
     color: #fff;
-    background-color: #000;
+    background: linear-gradient(
+        90deg,
+        rgba(187, 14, 151, 1) 0%,
+        rgba(136, 12, 110, 1) 100%
+    );
     font-size: 1.1em;
 `;
 
