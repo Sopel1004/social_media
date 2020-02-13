@@ -41,15 +41,13 @@ const StyledArticle = styled.article`
         'content content content content content';
 `;
 
-const Comment = () => {
+const Comment = ({ userName, content, createdAt }) => {
     return (
         <StyledArticle>
             <StyledCommentAvatar small />
-            <Name>John Smith</Name>
-            <Date>1 hour ago</Date>
-            <Content>
-                hsdfkjhdskfhdsahfksdhbckbsjhdaksjbvjhsskjcdb hjvkasjskjfhksdjhf
-            </Content>
+            <Name>{userName}</Name>
+            <Date>{createdAt}</Date>
+            <Content>{content}</Content>
         </StyledArticle>
     );
 };

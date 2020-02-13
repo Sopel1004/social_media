@@ -29,15 +29,15 @@ const StyledH3 = styled.h3`
     margin: 0 10px;
 `;
 
-const CommentsSection = ({ closeCommentsSection }) => {
+const CommentsSection = ({ postId, comments, closeCommentsSection }) => {
     return (
         <StyledSection>
             <Header>
                 <LeftArrowIcon onClick={closeCommentsSection} />
                 <StyledH3>Comments</StyledH3>
             </Header>
-            <CommentsList />
-            <BottomBar />
+            <CommentsList comments={comments} />
+            <BottomBar postId={postId} />
         </StyledSection>
     );
 };

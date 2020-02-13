@@ -19,30 +19,20 @@ const StyledLi = styled.li`
     margin-top: 2px;
 `;
 
-const CommentsList = () => {
+const CommentsList = ({ comments }) => {
     return (
         <StyledUl>
-            <StyledLi>
-                <Comment />
-            </StyledLi>
-            <StyledLi>
-                <Comment />
-            </StyledLi>
-            <StyledLi>
-                <Comment />
-            </StyledLi>
-            <StyledLi>
-                <Comment />
-            </StyledLi>
-            <StyledLi>
-                <Comment />
-            </StyledLi>
-            <StyledLi>
-                <Comment />
-            </StyledLi>
-            <StyledLi>
-                <Comment />
-            </StyledLi>
+            {comments
+                ? comments.map(comment => (
+                      <StyledLi key={comment.id}>
+                          <Comment
+                              content={comment.content}
+                              userName={comment.userName}
+                              createdAt={comment.createdAt.seconds}
+                          />
+                      </StyledLi>
+                  ))
+                : null}
         </StyledUl>
     );
 };

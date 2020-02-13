@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import PostsList from './PostsList';
-
-const url = 'https://jsonplaceholder.typicode.com/posts';
+import firebase from '../config/firebase';
 
 const StyledSection = styled.section`
     width: 100%;
@@ -15,22 +14,28 @@ const StyledH2 = styled.h2`
     margin: 0;
 `;
 
-const Main = () => {
-    const [posts, setPosts] = useState(null);
+function useData() {
+    const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch(url);
-                const data = await response.json();
-                setPosts(data);
-            } catch (e) {
-                console.log(e);
-            }
-        };
-        fetchData();
+        const unsubscribe = firebase
+            .firestore()
+            .collection('posts')
+            .onSnapshot(snapshot => {
+                const newPosts = snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+                setPosts(newPosts);
+            });
+        return () => unsubscribe();
     }, []);
 
+    return posts;
+}
+
+const Main = () => {
+    const posts = useData();
     return (
         <StyledSection>
             <StyledH2>What's new</StyledH2>

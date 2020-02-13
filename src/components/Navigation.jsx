@@ -58,7 +58,7 @@ const StyledProfileIcon = styled(ProfileIcon)`
 
 const Navigation = () => (
     <Nav>
-        <NavLink exact to="/" activeClassName="selected">
+        <NavLink to="/home" activeClassName="selected">
             <StyledHomeIcon />
         </NavLink>
         <NavLink to="/discover" activeClassName="selected">

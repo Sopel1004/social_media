@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Avatar from './Avatar';
+import CommentsSection from './CommentsSection';
 import { ReactComponent as LikeIcon } from '../images/like.svg';
 import { ReactComponent as CommentIcon } from '../images/comment.svg';
 
@@ -63,17 +64,38 @@ const StyledArticle = styled.article`
         'likes likesNumber comments commentsNumber .';
 `;
 
-const Post = ({ userId, body, openCommentsSection }) => (
-    <StyledArticle>
-        <StyledPostAvatar small />
-        <Name>John Smith</Name>
-        <Date>1 hour ago</Date>
-        <Content>{body}</Content>
-        <Like />
-        <LikesNumber>60</LikesNumber>
-        <Comment onClick={openCommentsSection} />
-        <CommentsNumber>10</CommentsNumber>
-    </StyledArticle>
-);
+const Post = ({
+    userName,
+    createdAt,
+    content,
+    likes,
+    commentsNumber,
+    postId,
+    comments
+}) => {
+    const [isActive, setIsActive] = useState(false);
+
+    return (
+        <>
+            <StyledArticle>
+                <StyledPostAvatar small />
+                <Name>{userName}</Name>
+                <Date>{createdAt}</Date>
+                <Content>{content}</Content>
+                <Like />
+                <LikesNumber>{likes}</LikesNumber>
+                <Comment onClick={() => setIsActive(!isActive)} />
+                <CommentsNumber>{commentsNumber}</CommentsNumber>
+            </StyledArticle>
+            {isActive ? (
+                <CommentsSection
+                    postId={postId}
+                    comments={comments}
+                    closeCommentsSection={() => setIsActive(!isActive)}
+                />
+            ) : null}
+        </>
+    );
+};
 
 export default Post;

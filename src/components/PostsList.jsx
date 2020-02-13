@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Post from './Post';
-import CommentsSection from './CommentsSection';
 
 const StyledUl = styled.ul`
     width: 100%;
@@ -20,25 +19,20 @@ const StyledLi = styled.li`
 `;
 
 const PostsList = ({ posts }) => {
-    const [isActive, setIsActive] = useState(false);
-
     return (
         <StyledUl>
             {posts ? (
                 posts.map(post => (
                     <StyledLi key={post.id}>
                         <Post
-                            body={post.body}
-                            user={post.userId}
-                            openCommentsSection={() => setIsActive(!isActive)}
+                            content={post.content}
+                            userName={post.userName}
+                            createdAt={post.createdAt.seconds}
+                            likes={post.likes}
+                            commentsNumber={post.comments.length}
+                            postId={post.id}
+                            comments={post.comments}
                         />
-                        {isActive ? (
-                            <CommentsSection
-                                closeCommentsSection={() =>
-                                    setIsActive(!isActive)
-                                }
-                            />
-                        ) : null}
                     </StyledLi>
                 ))
             ) : (

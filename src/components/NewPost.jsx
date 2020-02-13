@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import firebase from '../config/firebase';
 
 const StyledSection = styled.section`
     width: 100%;
@@ -43,13 +44,34 @@ const StyledButton = styled.button`
 `;
 
 const NewPost = () => {
+    const [textAreaValue, setTextAreaValue] = useState('');
+
+    const addPost = e => {
+        e.preventDefault();
+
+        firebase
+            .firestore()
+            .collection('posts')
+            .add({
+                userId: 1,
+                userName: 'John Smith',
+                content: textAreaValue,
+                createdAt: new Date(),
+                likes: 0,
+                comments: []
+            })
+            .then(() => setTextAreaValue(''));
+    };
+
     return (
         <StyledSection>
             <StyledH2>Create post</StyledH2>
-            <StyledForm>
+            <StyledForm onSubmit={addPost}>
                 <StyledTextarea
                     placeholder="Write something..."
                     rows="20"
+                    value={textAreaValue}
+                    onChange={e => setTextAreaValue(e.currentTarget.value)}
                 ></StyledTextarea>
                 <StyledButton type="submit">Post</StyledButton>
             </StyledForm>

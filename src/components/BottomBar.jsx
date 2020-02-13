@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import firebase from '../config/firebase';
 
 const StyledDiv = styled.div`
     width: 100%;
@@ -30,13 +31,50 @@ const SendButton = styled.button`
     border: none;
 `;
 
-const BottomBar = () => {
+const BottomBar = ({ postId }) => {
+    const [inputValue, setInputValue] = useState('');
+
+    const addComment = e => {
+        e.preventDefault();
+
+        const newId = Math.floor(Math.random() * 1000);
+        /*const database = firebase
+            .firestore()
+            .collection('posts')
+            .doc(postId);
+        let data, newId;
+        database.get().then(doc => {
+            data = doc.data();
+        });
+        if (data.comments.length > 0) {
+            newId = data.comments[comments.length - 1].id + 1;
+        } else {
+            newId = 0;
+        }*/
+
+        firebase
+            .firestore()
+            .collection('posts')
+            .doc(postId)
+            .update({
+                comments: firebase.firestore.FieldValue.arrayUnion({
+                    id: newId,
+                    userName: 'Alan Logan',
+                    content: inputValue,
+                    createdAt: new Date()
+                })
+            })
+            .then(() => setInputValue(''));
+    };
+
     return (
         <StyledDiv>
-            <StyledForm>
+            <StyledForm onSubmit={addComment}>
                 <StyledInput
                     type="text"
                     placeholder="Write a comment..."
+                    value={inputValue}
+                    onChange={e => setInputValue(e.currentTarget.value)}
                 ></StyledInput>
                 <SendButton type="submit">Send</SendButton>
             </StyledForm>
