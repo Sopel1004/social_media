@@ -1,15 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
 import Avatar from './Avatar';
+import timeDifference from '../functions/timeDifference';
+import { Link } from 'react-router-dom';
 
 const StyledCommentAvatar = styled(Avatar)`
     justify-self: center;
     grid-area: avatar;
 `;
 
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    color: #000;
+    grid-area: userName;
+`;
+
 const Name = styled.p`
     margin: 0;
-    grid-area: userName;
 `;
 
 const Date = styled.p`
@@ -41,12 +48,14 @@ const StyledArticle = styled.article`
         'content content content content content';
 `;
 
-const Comment = ({ userName, content, createdAt }) => {
+const Comment = ({ userName, content, createdAt, date, userId }) => {
     return (
         <StyledArticle>
             <StyledCommentAvatar small />
-            <Name>{userName}</Name>
-            <Date>{createdAt}</Date>
+            <StyledLink to={`/profile/${userId}`}>
+                <Name>{userName}</Name>
+            </StyledLink>
+            <Date>{timeDifference(date, createdAt)}</Date>
             <Content>{content}</Content>
         </StyledArticle>
     );

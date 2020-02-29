@@ -60,7 +60,7 @@ const LoginView = () => {
             <SignUpButton
                 onClick={() => setRegisterFormIsActive(!registerFormIsActive)}
             >
-                Sing up
+                Sign up
             </SignUpButton>
             {loginFormIsActive && (
                 <LoginForm

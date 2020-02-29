@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import firebase from '../config/firebase';
+import UserContext from './UserContext';
 
 const StyledDiv = styled.div`
     width: 100%;
@@ -33,38 +34,50 @@ const SendButton = styled.button`
 
 const BottomBar = ({ postId }) => {
     const [inputValue, setInputValue] = useState('');
+    const currentUser = useContext(UserContext);
 
-    const addComment = e => {
+    const addComment = async e => {
         e.preventDefault();
 
-        const newId = Math.floor(Math.random() * 1000);
-        /*const database = firebase
-            .firestore()
-            .collection('posts')
-            .doc(postId);
-        let data, newId;
-        database.get().then(doc => {
-            data = doc.data();
-        });
-        if (data.comments.length > 0) {
-            newId = data.comments[comments.length - 1].id + 1;
-        } else {
-            newId = 0;
-        }*/
-
-        firebase
+        let newId = Math.floor(Math.random() * 10000);
+        let userData;
+        /*await firebase
             .firestore()
             .collection('posts')
             .doc(postId)
-            .update({
-                comments: firebase.firestore.FieldValue.arrayUnion({
-                    id: newId,
-                    userName: 'Alan Logan',
-                    content: inputValue,
-                    createdAt: new Date()
-                })
+            .then(doc => {
+                data = doc.data();
+                data.comments.length
+                    ? (newId = data.comments[data.comments.length - 1].id + 1)
+                    : (newId = 0);
+                console.log(data, newId);
+                debugger;
+            });
+        */
+        firebase
+            .firestore()
+            .collection('users')
+            .doc(currentUser.uid)
+            .get()
+            .then(doc => {
+                userData = doc.data();
             })
-            .then(() => setInputValue(''));
+            .then(() => {
+                firebase
+                    .firestore()
+                    .collection('posts')
+                    .doc(postId)
+                    .update({
+                        comments: firebase.firestore.FieldValue.arrayUnion({
+                            id: newId,
+                            userId: currentUser.uid,
+                            userName: userData.fullName,
+                            content: inputValue,
+                            createdAt: Date.now()
+                        })
+                    })
+                    .then(() => setInputValue(''));
+            });
     };
 
     return (

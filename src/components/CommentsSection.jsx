@@ -29,14 +29,20 @@ const StyledH3 = styled.h3`
     margin: 0 10px;
 `;
 
-const CommentsSection = ({ postId, comments, closeCommentsSection }) => {
+const CommentsSection = ({
+    postId,
+    comments,
+    date,
+    userId,
+    closeCommentsSection
+}) => {
     return (
         <StyledSection>
             <Header>
                 <LeftArrowIcon onClick={closeCommentsSection} />
                 <StyledH3>Comments</StyledH3>
             </Header>
-            <CommentsList comments={comments} />
+            <CommentsList comments={comments} date={date} userId={userId} />
             <BottomBar postId={postId} />
         </StyledSection>
     );

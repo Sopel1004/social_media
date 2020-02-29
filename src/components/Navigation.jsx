@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { ReactComponent as HomeIcon } from '../images/home.svg';
@@ -6,6 +6,7 @@ import { ReactComponent as GlobeIcon } from '../images/globe.svg';
 import { ReactComponent as NewPostIcon } from '../images/plus-circle.svg';
 import { ReactComponent as MessegeIcon } from '../images/mail.svg';
 import { ReactComponent as ProfileIcon } from '../images/user.svg';
+import UserContext from './UserContext';
 
 const Nav = styled.nav`
     width: 100%;
@@ -56,24 +57,30 @@ const StyledProfileIcon = styled(ProfileIcon)`
     }
 `;
 
-const Navigation = () => (
-    <Nav>
-        <NavLink to="/home" activeClassName="selected">
-            <StyledHomeIcon />
-        </NavLink>
-        <NavLink to="/discover" activeClassName="selected">
-            <StyledGlobeIcon />
-        </NavLink>
-        <NavLink to="/create_post" activeClassName="selected">
-            <StyledNewPostIcon />
-        </NavLink>
-        <NavLink to="/messeges" activeClassName="selected">
-            <StyledMessegeIcon />
-        </NavLink>
-        <NavLink to="/profile" activeClassName="selected">
-            <StyledProfileIcon />
-        </NavLink>
-    </Nav>
-);
+const Navigation = () => {
+    const currentUser = useContext(UserContext);
+    return (
+        <Nav>
+            <NavLink to="/home" activeClassName="selected">
+                <StyledHomeIcon />
+            </NavLink>
+            <NavLink to="/discover" activeClassName="selected">
+                <StyledGlobeIcon />
+            </NavLink>
+            <NavLink to="/create_post" activeClassName="selected">
+                <StyledNewPostIcon />
+            </NavLink>
+            <NavLink to="/messeges" activeClassName="selected">
+                <StyledMessegeIcon />
+            </NavLink>
+            <NavLink
+                to={`/profile/${currentUser.uid}`}
+                activeClassName="selected"
+            >
+                <StyledProfileIcon />
+            </NavLink>
+        </Nav>
+    );
+};
 
 export default Navigation;

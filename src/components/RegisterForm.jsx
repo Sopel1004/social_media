@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import firebase from '../config/firebase';
 import { ReactComponent as LeftArrowIcon } from '../images/arrow-left.svg';
+import { withRouter } from 'react-router';
 
 const StyledSection = styled.section`
     width: 100%;
@@ -9,7 +11,7 @@ const StyledSection = styled.section`
     top: 0;
     left: 0;
     display: grid;
-    grid-template-rows: 32px 1fr 1fr;
+    grid-template-rows: 32px auto;
     justify-items: center;
     align-items: center;
     background: rgb(222, 52, 121);
@@ -47,7 +49,7 @@ const StyledInput = styled.input`
     border: 2px solid #fff;
     background-color: transparent;
     border-radius: 20px;
-    margin: 10px 0 20px 0;
+    margin: 5px 0 20px 0;
     color: #fff;
 
     &:focus {
@@ -64,27 +66,94 @@ const StyledButton = styled.button`
     font-weight: 700;
     border: none;
     border-radius: 20px;
-    margin-top: 20px;
+    margin-top: 10px;
 `;
 
-const RegisterForm = ({ closeRegisterForm }) => {
+const ErrorMessage = styled.p`
+    width: 80%;
+    text-align: center;
+    font-size: 0.75em;
+`;
+
+const RegisterForm = ({ history, closeRegisterForm }) => {
+    const [emailValue, setEmailValue] = useState('');
+    const [passwordValue, setPasswordValue] = useState('');
+    const [fullNameValue, setFullNameValue] = useState('');
+    const [dateValue, setDateValue] = useState('');
+    const [error, setError] = useState(null);
+    const SignUp = async e => {
+        e.preventDefault();
+        try {
+            await firebase
+                .auth()
+                .createUserWithEmailAndPassword(emailValue, passwordValue)
+                .then(cred => {
+                    return firebase
+                        .firestore()
+                        .collection('users')
+                        .doc(cred.user.uid)
+                        .set({
+                            fullName: fullNameValue,
+                            dateOfBirth: dateValue,
+                            followers: [],
+                            following: []
+                        });
+                })
+                .then(() => {
+                    setEmailValue('');
+                    setPasswordValue('');
+                    setFullNameValue('');
+                    setDateValue('');
+                    setError(null);
+                });
+            history.push('/home');
+        } catch (error) {
+            setError(error.message);
+        }
+    };
+
     return (
         <StyledSection>
             <StyledLeftArrowIcon onClick={closeRegisterForm} />
             <StyledH2>Create account</StyledH2>
-            <StyledForm>
+            <StyledForm onSubmit={SignUp}>
                 <label htmlFor="email">Email</label>
-                <StyledInput type="email" id="email" required></StyledInput>
+                <StyledInput
+                    type="email"
+                    id="email"
+                    onChange={e => setEmailValue(e.currentTarget.value)}
+                    value={emailValue}
+                    required
+                ></StyledInput>
                 <label htmlFor="password">Password</label>
                 <StyledInput
                     type="password"
                     id="password"
+                    onChange={e => setPasswordValue(e.currentTarget.value)}
+                    value={passwordValue}
                     required
                 ></StyledInput>
+                <label htmlFor="fullName">Full name</label>
+                <StyledInput
+                    type="type"
+                    id="fullName"
+                    onChange={e => setFullNameValue(e.currentTarget.value)}
+                    value={fullNameValue}
+                    required
+                ></StyledInput>
+                <label htmlFor="date">Date of birth</label>
+                <StyledInput
+                    type="date"
+                    id="date"
+                    onChange={e => setDateValue(e.currentTarget.value)}
+                    value={dateValue}
+                    required
+                ></StyledInput>
+                {error && <ErrorMessage>{error}</ErrorMessage>}
                 <StyledButton type="submit">Sign up</StyledButton>
             </StyledForm>
         </StyledSection>
     );
 };
 
-export default RegisterForm;
+export default withRouter(RegisterForm);

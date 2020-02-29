@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import firebase from '../config/firebase';
+import UserContext from './UserContext';
+import { useHistory } from 'react-router-dom';
 
 const StyledSection = styled.section`
     width: 100%;
@@ -45,22 +47,36 @@ const StyledButton = styled.button`
 
 const NewPost = () => {
     const [textAreaValue, setTextAreaValue] = useState('');
+    const currentUser = useContext(UserContext);
+    const history = useHistory();
 
-    const addPost = e => {
+    const addPost = async e => {
         e.preventDefault();
 
-        firebase
+        let userData;
+        await firebase
             .firestore()
-            .collection('posts')
-            .add({
-                userId: 1,
-                userName: 'John Smith',
-                content: textAreaValue,
-                createdAt: new Date(),
-                likes: 0,
-                comments: []
+            .collection('users')
+            .doc(currentUser.uid)
+            .get()
+            .then(doc => {
+                userData = doc.data();
             })
-            .then(() => setTextAreaValue(''));
+            .then(() => {
+                firebase
+                    .firestore()
+                    .collection('posts')
+                    .add({
+                        userId: currentUser.uid,
+                        userName: userData.fullName,
+                        content: textAreaValue,
+                        createdAt: Date.now(),
+                        likes: [],
+                        comments: []
+                    });
+            })
+            .then(() => setTextAreaValue(''))
+            .then(() => history.push('/home'));
     };
 
     return (

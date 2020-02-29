@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import Avatar from './Avatar';
 import CommentsSection from './CommentsSection';
 import { ReactComponent as LikeIcon } from '../images/like.svg';
 import { ReactComponent as CommentIcon } from '../images/comment.svg';
+import timeDifference from '../functions/timeDifference';
+import firebase from '../config/firebase';
+import UserContext from './UserContext';
+import { Link } from 'react-router-dom';
 
 const StyledPostAvatar = styled(Avatar)`
     justify-self: center;
@@ -12,7 +16,6 @@ const StyledPostAvatar = styled(Avatar)`
 
 const Name = styled.p`
     margin: 0;
-    grid-area: userName;
 `;
 
 const Date = styled.p`
@@ -31,6 +34,13 @@ const Content = styled.p`
 const Like = styled(LikeIcon)`
     grid-area: likes;
     justify-self: center;
+`;
+
+const Liked = styled(LikeIcon)`
+    grid-area: likes;
+    justify-self: center;
+    stroke: #b90292;
+    fill: #b90292;
 `;
 
 const Comment = styled(CommentIcon)`
@@ -64,6 +74,12 @@ const StyledArticle = styled.article`
         'likes likesNumber comments commentsNumber .';
 `;
 
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    color: #000;
+    grid-area: userName;
+`;
+
 const Post = ({
     userName,
     createdAt,
@@ -71,19 +87,62 @@ const Post = ({
     likes,
     commentsNumber,
     postId,
-    comments
+    comments,
+    date,
+    userId
 }) => {
     const [isActive, setIsActive] = useState(false);
+    const currentUser = useContext(UserContext);
+
+    const checkIfLiked = () => {
+        const result = likes.includes(currentUser.uid);
+        return result;
+    };
+
+    const addToLiked = async () => {
+        const result = checkIfLiked();
+        try {
+            if (result) {
+                await firebase
+                    .firestore()
+                    .collection('posts')
+                    .doc(postId)
+                    .update({
+                        likes: firebase.firestore.FieldValue.arrayRemove(
+                            currentUser.uid
+                        )
+                    });
+            } else {
+                await firebase
+                    .firestore()
+                    .collection('posts')
+                    .doc(postId)
+                    .update({
+                        likes: firebase.firestore.FieldValue.arrayUnion(
+                            currentUser.uid
+                        )
+                    });
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     return (
         <>
             <StyledArticle>
                 <StyledPostAvatar small />
-                <Name>{userName}</Name>
-                <Date>{createdAt}</Date>
+                <StyledLink to={`/profile/${userId}`}>
+                    <Name>{userName}</Name>
+                </StyledLink>
+                <Date>{timeDifference(date, createdAt)}</Date>
                 <Content>{content}</Content>
-                <Like />
-                <LikesNumber>{likes}</LikesNumber>
+                {checkIfLiked() ? (
+                    <Liked onClick={() => addToLiked()} />
+                ) : (
+                    <Like onClick={() => addToLiked()} />
+                )}
+                <LikesNumber>{likes.length}</LikesNumber>
                 <Comment onClick={() => setIsActive(!isActive)} />
                 <CommentsNumber>{commentsNumber}</CommentsNumber>
             </StyledArticle>
@@ -91,6 +150,8 @@ const Post = ({
                 <CommentsSection
                     postId={postId}
                     comments={comments}
+                    date={date}
+                    userId={userId}
                     closeCommentsSection={() => setIsActive(!isActive)}
                 />
             ) : null}

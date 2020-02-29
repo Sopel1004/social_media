@@ -19,7 +19,7 @@ const StyledLi = styled.li`
     margin-top: 2px;
 `;
 
-const CommentsList = ({ comments }) => {
+const CommentsList = ({ comments, date, userId }) => {
     return (
         <StyledUl>
             {comments
@@ -28,7 +28,9 @@ const CommentsList = ({ comments }) => {
                           <Comment
                               content={comment.content}
                               userName={comment.userName}
-                              createdAt={comment.createdAt.seconds}
+                              createdAt={comment.createdAt}
+                              date={date}
+                              userId={userId}
                           />
                       </StyledLi>
                   ))

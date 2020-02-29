@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as LeftArrowIcon } from '../images/arrow-left.svg';
+import firebase from '../config/firebase';
+import { withRouter } from 'react-router';
 
 const StyledSection = styled.section`
     width: 100%;
@@ -9,7 +11,7 @@ const StyledSection = styled.section`
     top: 0;
     left: 0;
     display: grid;
-    grid-template-rows: 32px 1fr 1fr;
+    grid-template-rows: 32px auto;
     justify-items: center;
     align-items: center;
     background: rgb(222, 52, 121);
@@ -47,7 +49,7 @@ const StyledInput = styled.input`
     border: 2px solid #fff;
     background-color: transparent;
     border-radius: 20px;
-    margin: 10px 0 20px 0;
+    margin: 5px 0 20px 0;
     color: #fff;
 
     &:focus {
@@ -67,24 +69,63 @@ const StyledButton = styled.button`
     margin-top: 20px;
 `;
 
-const LoginForm = ({ closeLoginForm }) => {
+const ErrorMessage = styled.p`
+    width: 80%;
+    text-align: center;
+    font-size: 0.75em;
+`;
+
+const LoginForm = ({ history, closeLoginForm }) => {
+    const [emailValue, setEmailValue] = useState('test@xx.xx');
+    const [passwordValue, setPasswordValue] = useState('123456');
+    const [error, setError] = useState(null);
+    const SignIn = async e => {
+        e.preventDefault();
+        try {
+            await firebase
+                .auth()
+                .setPersistence(firebase.auth.Auth.Persistence.SESSION)
+                .then(() =>
+                    firebase
+                        .auth()
+                        .signInWithEmailAndPassword(emailValue, passwordValue)
+                )
+                .then(() => {
+                    setEmailValue('');
+                    setPasswordValue('');
+                    setError(null);
+                });
+            history.push('/home');
+        } catch (error) {
+            setError(error.message);
+        }
+    };
     return (
         <StyledSection>
             <StyledLeftArrowIcon onClick={closeLoginForm} />
             <StyledH2>Sign in</StyledH2>
-            <StyledForm>
+            <StyledForm onSubmit={SignIn}>
                 <label htmlFor="email">Email</label>
-                <StyledInput type="email" id="email" required></StyledInput>
+                <StyledInput
+                    type="email"
+                    id="email"
+                    onChange={e => setEmailValue(e.currentTarget.value)}
+                    value={emailValue}
+                    required
+                ></StyledInput>
                 <label htmlFor="password">Password</label>
                 <StyledInput
                     type="password"
                     id="password"
+                    onChange={e => setPasswordValue(e.currentTarget.value)}
+                    value={passwordValue}
                     required
                 ></StyledInput>
+                {error && <ErrorMessage>{error}</ErrorMessage>}
                 <StyledButton type="submit">Sign in</StyledButton>
             </StyledForm>
         </StyledSection>
     );
 };
 
-export default LoginForm;
+export default withRouter(LoginForm);
