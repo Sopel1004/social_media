@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import styled from 'styled-components';
 import Avatar from './Avatar';
 import PostsList from './PostsList';
 import UserContext from './UserContext';
@@ -7,94 +6,9 @@ import { useParams } from 'react-router-dom';
 import { ReactComponent as MoreIcon } from '../images/more-vertical.svg';
 import firebase from '../config/firebase';
 import ProfileMenu from './ProfileMenu';
-
-const StyledSection = styled.section`
-    width: 100%;
-    height: calc(100vh - 100px);
-    padding: 10px 5px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-`;
-
-const StyledH2 = styled.h2`
-    margin: 0;
-    justify-self: flex-start;
-`;
-
-const StyledProfileInfo = styled.div`
-    width: 200px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-    grid-template-areas:
-        'followersNumber followingNumber'
-        'followers following';
-    justify-items: center;
-`;
-
-const StyledUserName = styled.p`
-    margin: 20px 0;
-    font-size: 1.5em;
-    font-weight: 700;
-`;
-
-const StyledFollowersNumber = styled.span`
-    align-self: end;
-    grid-area: followersNumber;
-`;
-const StyledFollowingNumber = styled.span`
-    align-self: end;
-    grid-area: followingNumber;
-`;
-const StyledFollowers = styled.p`
-    margin: 0;
-    align-self: start;
-    grid-area: followers;
-`;
-const StyledFollowing = styled.p`
-    margin: 0;
-    align-self: start;
-    grid-area: following;
-`;
-
-const FollowButton = styled.button`
-    width: 120px;
-    padding: 5px;
-    border-radius: 20px;
-    color: ${props => (props.followed ? '#DC1717' : '#fff')};
-    font-size: 1.2em;
-    border: ${props => (props.followed ? '1px solid #DC1717' : 'none')};
-    background: ${props =>
-        props.followed
-            ? 'transparent'
-            : `linear-gradient(
-        90deg,
-        rgba(187, 14, 151, 1) 0%,
-        rgba(136, 12, 110, 1) 100%
-    )`};
-`;
-
-const MessegeButton = styled(FollowButton)`
-    color: #000;
-    border: 1px solid #bababa;
-    background: #fff;
-`;
-
-const ButtonsConteiner = styled.div`
-    width: 100%;
-    display: flex;
-    justify-content: space-evenly;
-    margin: 20px 0;
-`;
-
-const TopBar = styled.div`
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-`;
+import Section from '../styles/shared/section';
+import H2 from '../styles/shared/h2';
+import StyledProfile from '../styles/Profile';
 
 function useData(id) {
     const [posts, setPosts] = useState(null);
@@ -191,46 +105,61 @@ const Profile = () => {
     };
 
     return (
-        <StyledSection>
-            <TopBar>
-                <StyledH2>Profile</StyledH2>
+        <Section>
+            <StyledProfile.TopBar>
+                <H2>Profile</H2>
                 {currentUser.uid === id && (
-                    <MoreIcon onClick={() => setIsVisible(!isVisible)} />
+                    <MoreIcon
+                        onClick={() => setIsVisible(!isVisible)}
+                        tabIndex={0}
+                        role="button"
+                        aria-label="More"
+                        onKeyDown={e =>
+                            e.key === 'Enter' ? setIsVisible(!isVisible) : null
+                        }
+                    />
                 )}
                 {isVisible && (
                     <ProfileMenu closeMenu={() => setIsVisible(!isVisible)} />
                 )}
-            </TopBar>
+            </StyledProfile.TopBar>
 
             <Avatar />
-            <StyledUserName>{userData && userData.fullName}</StyledUserName>
-            <StyledProfileInfo>
-                <StyledFollowersNumber>
+            <StyledProfile.UserName>
+                {userData && userData.fullName}
+            </StyledProfile.UserName>
+            <StyledProfile.ProfileInfo>
+                <StyledProfile.FollowersNumber>
                     {userData && userData.followers.length}
-                </StyledFollowersNumber>
-                <StyledFollowingNumber>
+                </StyledProfile.FollowersNumber>
+                <StyledProfile.FollowingNumber>
                     {userData && userData.following.length}
-                </StyledFollowingNumber>
-                <StyledFollowers>followers</StyledFollowers>
-                <StyledFollowing>following</StyledFollowing>
-            </StyledProfileInfo>
+                </StyledProfile.FollowingNumber>
+                <StyledProfile.Followers>followers</StyledProfile.Followers>
+                <StyledProfile.Following>following</StyledProfile.Following>
+            </StyledProfile.ProfileInfo>
             {currentUser.uid !== id && (
-                <ButtonsConteiner>
+                <StyledProfile.ButtonsContainer>
                     {isFollowed ? (
-                        <FollowButton followed onClick={addToFollowing}>
+                        <StyledProfile.FollowButton
+                            followed
+                            onClick={addToFollowing}
+                        >
                             Unfollow
-                        </FollowButton>
+                        </StyledProfile.FollowButton>
                     ) : (
-                        <FollowButton onClick={addToFollowing}>
+                        <StyledProfile.FollowButton onClick={addToFollowing}>
                             Follow
-                        </FollowButton>
+                        </StyledProfile.FollowButton>
                     )}
-                    <MessegeButton>Messege</MessegeButton>
-                </ButtonsConteiner>
+                    <StyledProfile.MessageButton>
+                        Messege
+                    </StyledProfile.MessageButton>
+                </StyledProfile.ButtonsContainer>
             )}
 
-            <PostsList posts={posts} />
-        </StyledSection>
+            <PostsList posts={posts} marginTop={'50px'} />
+        </Section>
     );
 };
 

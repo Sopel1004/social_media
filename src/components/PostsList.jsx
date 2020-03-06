@@ -1,32 +1,16 @@
 import React from 'react';
-import styled from 'styled-components';
+import Ul from '../styles/PostList';
 import Post from './Post';
 
-const StyledUl = styled.ul`
-    width: 100%;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-`;
-
-const StyledLi = styled.li`
-    width: 100%;
-    margin: 5px 0;
-`;
-
-const PostsList = ({ posts }) => {
+const PostsList = ({ posts, marginTop }) => {
     const date = Date.now();
 
     return (
-        <StyledUl>
+        <Ul marginTop={marginTop}>
             {posts ? (
                 posts.length ? (
                     posts.map(post => (
-                        <StyledLi key={post.id}>
+                        <Ul.Li key={post.id}>
                             <Post
                                 content={post.content}
                                 userName={post.userName}
@@ -38,7 +22,7 @@ const PostsList = ({ posts }) => {
                                 date={date}
                                 userId={post.userId}
                             />
-                        </StyledLi>
+                        </Ul.Li>
                     ))
                 ) : (
                     <p>{`Nothing is here. Let's follow somebody.`}</p>
@@ -46,7 +30,7 @@ const PostsList = ({ posts }) => {
             ) : (
                 <p>{'Loading...'}</p>
             )}
-        </StyledUl>
+        </Ul>
     );
 };
 

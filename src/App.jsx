@@ -7,7 +7,7 @@ import PrivateRoute from './components/PrivateRoute';
 import Home from './components/Home';
 import Discover from './components/Discover';
 import NewPost from './components/NewPost';
-import Messeges from './components/Messeges';
+import Messages from './components/Messages';
 import Profile from './components/Profile';
 import firebase from './config/firebase';
 
@@ -55,7 +55,7 @@ const App = () => {
                             <Route path="/home" component={Home} />
                             <Route path="/discover" component={Discover} />
                             <Route path="/create_post" component={NewPost} />
-                            <Route path="/messeges" component={Messeges} />
+                            <Route path="/messages" component={Messages} />
                             <Route path="/profile/:id" component={Profile} />
                         </Switch>
                     </PrivateRoute>
