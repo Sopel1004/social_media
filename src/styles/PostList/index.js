@@ -1,21 +1,15 @@
 import styled from 'styled-components';
-import Li from './li';
+import TempList from '../shared/list';
 
-const Ul = styled.ul`
-    width: 100%;
-    list-style-type: none;
-    margin-top: ${props => props.marginTop || '0'};
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+const List = styled(TempList)`
+    && {
+        margin-top: ${props => props.marginTop || '0'};
+        overflow-y: unset;
 
-    @media (min-width: 64em) {
-        width: 50%;
+        @media (min-width: 64em) {
+            width: 50%;
+        }
     }
 `;
 
-Ul.Li = Li;
-
-export default Ul;
+export default List;

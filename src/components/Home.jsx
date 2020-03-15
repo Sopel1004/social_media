@@ -12,6 +12,7 @@ function useData() {
     useEffect(() => {
         let isSubscribed = true;
         let userFollowing;
+        let unsubscribe;
         firebase
             .firestore()
             .collection('users')
@@ -19,23 +20,25 @@ function useData() {
             .get()
             .then(doc => (userFollowing = doc.data().following))
             .then(() => {
-                //if (userFollowing.length) {
-                firebase
+                unsubscribe = firebase
                     .firestore()
                     .collection('posts')
                     .where('userId', 'in', [...userFollowing, currentUser.uid])
                     .orderBy('createdAt', 'desc')
-                    .onSnapshot(snapshot => {
-                        const newPosts = snapshot.docs.map(doc => ({
-                            id: doc.id,
-                            ...doc.data()
-                        }));
-                        if (isSubscribed) setPosts(newPosts);
-                    });
-                //}
+                    .onSnapshot(
+                        snapshot => {
+                            const newPosts = snapshot.docs.map(doc => ({
+                                id: doc.id,
+                                ...doc.data()
+                            }));
+                            if (isSubscribed) setPosts(newPosts);
+                        },
+                        error => console.log(error)
+                    );
             });
         return () => {
             isSubscribed = false;
+            unsubscribe();
         };
     }, [currentUser.uid]);
 

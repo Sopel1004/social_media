@@ -9,7 +9,7 @@ function useData() {
 
     useEffect(() => {
         let isSubscribed = true;
-        firebase
+        let unsubscribe = firebase
             .firestore()
             .collection('posts')
             .orderBy('likes', 'asc')
@@ -23,6 +23,7 @@ function useData() {
             });
         return () => {
             isSubscribed = false;
+            unsubscribe();
         };
     }, []);
 

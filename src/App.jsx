@@ -9,6 +9,7 @@ import Discover from './components/Discover';
 import NewPost from './components/NewPost';
 import Messages from './components/Messages';
 import Profile from './components/Profile';
+import Chat from './components/Chat';
 import firebase from './config/firebase';
 
 const App = () => {
@@ -57,6 +58,7 @@ const App = () => {
                             <Route path="/create_post" component={NewPost} />
                             <Route path="/messages" component={Messages} />
                             <Route path="/profile/:id" component={Profile} />
+                            <Route path="/m/:id" component={Chat} />
                         </Switch>
                     </PrivateRoute>
                 </Switch>

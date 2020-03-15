@@ -2,18 +2,21 @@ import React from 'react';
 import styled from 'styled-components';
 import avatarImage from '../images/avatar.png';
 
-const StyledImg = styled.img`
+const StyledImg = styled.img.attrs(props => ({
+    size: props.size || '8em'
+}))`
     border-radius: 50%;
-    width: ${props => (props.small ? '32px' : '96px')};
+    width: ${props => props.size};
+    height: ${props => props.size};
 `;
 
-const Avatar = ({ className, small }) => {
+const Avatar = ({ className, size }) => {
     return (
         <StyledImg
             src={avatarImage}
             alt="Avatar"
-            small={small ? small : false}
             className={className}
+            size={size && size}
         />
     );
 };

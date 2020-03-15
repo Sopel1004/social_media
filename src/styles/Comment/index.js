@@ -6,7 +6,8 @@ const StyledComment = styled(Comment)`
     && {
         border: none;
         border-radius: 0;
-        border-bottom: 1px solid ${COLORS.primaryDark};
+        border-bottom: ${props =>
+            props.isLast ? 'none' : `1px solid ${COLORS.primaryDark}`};
         width: 98%;
         margin: 0 auto;
     }

@@ -45,7 +45,7 @@ const Profile = () => {
 
     useEffect(() => {
         let isSubscribed = true;
-        firebase
+        let unsubscribe = firebase
             .firestore()
             .collection('users')
             .doc(id)
@@ -59,6 +59,7 @@ const Profile = () => {
             });
         return () => {
             isSubscribed = false;
+            unsubscribe();
         };
     }, [currentUser.uid, id]);
 
@@ -97,6 +98,13 @@ const Profile = () => {
                         followers: firebase.firestore.FieldValue.arrayUnion(
                             currentUser.uid
                         )
+                    });
+                await firebase
+                    .firestore()
+                    .collection('messages')
+                    .add({
+                        users: [currentUser.uid, id],
+                        messages: []
                     });
             }
         } catch (error) {

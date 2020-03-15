@@ -56,7 +56,7 @@ const Post = ({
     return (
         <>
             <StyledPost isCommentSectionActive={isActive}>
-                <StyledPost.PostAvatar small />
+                <StyledPost.PostAvatar size="2em" />
                 <StyledPost.StyledLink to={`/profile/${userId}`}>
                     <StyledPost.Name>{userName}</StyledPost.Name>
                 </StyledPost.StyledLink>

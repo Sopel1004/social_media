@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import COLORS from '../colors';
 
 const FollowButton = styled.button`
-    width: 10em;
+    width: 40%;
     padding: 0.25em;
     border-radius: 1em;
     color: ${props => (props.followed ? COLORS.unfollow : COLORS.sText)};

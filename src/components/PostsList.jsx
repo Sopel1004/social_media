@@ -1,16 +1,16 @@
 import React from 'react';
-import Ul from '../styles/PostList';
+import List from '../styles/PostList';
 import Post from './Post';
 
 const PostsList = ({ posts, marginTop }) => {
     const date = Date.now();
 
     return (
-        <Ul marginTop={marginTop}>
+        <List marginTop={marginTop}>
             {posts ? (
                 posts.length ? (
                     posts.map(post => (
-                        <Ul.Li key={post.id}>
+                        <List.Element key={post.id}>
                             <Post
                                 content={post.content}
                                 userName={post.userName}
@@ -22,7 +22,7 @@ const PostsList = ({ posts, marginTop }) => {
                                 date={date}
                                 userId={post.userId}
                             />
-                        </Ul.Li>
+                        </List.Element>
                     ))
                 ) : (
                     <p>{`Nothing is here. Let's follow somebody.`}</p>
@@ -30,7 +30,7 @@ const PostsList = ({ posts, marginTop }) => {
             ) : (
                 <p>{'Loading...'}</p>
             )}
-        </Ul>
+        </List>
     );
 };
 
