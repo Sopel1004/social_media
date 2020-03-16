@@ -5,13 +5,7 @@ const PrivateRoute = ({ children, auth, ...rest }) => {
   return (
     <Route
       {...rest}
-      render={() =>
-        auth === true ? (
-          children
-        ) : (
-          <Redirect to={`${process.env.PUBLIC_URL}/login`} />
-        )
-      }
+      render={() => (auth === true ? children : <Redirect to={`/login`} />)}
     />
   );
 };
