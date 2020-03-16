@@ -10,7 +10,7 @@ const SearchList = ({ searchResult, closeSearchSection }) => {
         ? searchResult.map(result => (
             <List.Element key={result.userId}>
               <StyledLink
-                to={`/profile/${result.userId}`}
+                to={`${process.env.PUBLIC_URL}/profile/${result.userId}`}
                 onClick={closeSearchSection}
               >
                 <SearchElement userID={result.userId} name={result.name} />

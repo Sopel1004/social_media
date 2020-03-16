@@ -53,7 +53,9 @@ const Post = ({
     <>
       <StyledPost isCommentSectionActive={isActive}>
         <StyledPost.PostAvatar size="2em" />
-        <StyledPost.StyledLink to={`/profile/${userId}`}>
+        <StyledPost.StyledLink
+          to={`${process.env.PUBLIC_URL}/profile/${userId}`}
+        >
           <StyledPost.Name>{userName}</StyledPost.Name>
         </StyledPost.StyledLink>
         <StyledPost.Date>{timeDifference(date, createdAt)}</StyledPost.Date>
