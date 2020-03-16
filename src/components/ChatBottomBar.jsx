@@ -21,7 +21,8 @@ const ChatBottomBar = ({ chatID }) => {
           userID: currentUser.uid,
           content: inputValue,
           createdAt: Date.now()
-        })
+        }),
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
       })
       .then(() => setInputValue(''));
   };

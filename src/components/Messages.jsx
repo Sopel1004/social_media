@@ -20,16 +20,24 @@ const Messages = () => {
       .firestore()
       .collection('messages')
       .where('users', 'array-contains', currentUser.uid)
+      .orderBy('timestamp', 'desc')
       .get()
       .then(snapshot => {
         tempMessages = snapshot.docs.map(doc => {
           const data = doc.data();
+          const [anotherUserId] = data.users.filter(
+            user => user !== currentUser.uid
+          );
           return {
             id: doc.id,
-            userID: data.users[1],
+            userID: anotherUserId,
             content: data.messages.length
               ? data.messages[data.messages.length - 1].content
-              : null
+              : null,
+            lastMessageUserID: data.messages.length
+              ? data.messages[data.messages.length - 1].userID
+              : null,
+            timestamp: data.timestamp
           };
         });
       })

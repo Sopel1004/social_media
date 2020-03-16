@@ -39,12 +39,12 @@ const FriendsListSection = ({ closeFriendsList }) => {
               .get()
               .then(snapshot => {
                 const chatID = snapshot.docs.map(doc => {
-                  const [userId] = doc
+                  const [anotherUserId] = doc
                     .data()
                     .users.filter(user => user !== currentUser.uid);
                   return {
                     id: doc.id,
-                    userID: userId
+                    userID: anotherUserId
                   };
                 });
 

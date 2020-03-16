@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import List from '../shared/list';
-import ListElement from '../shared/listElement';
+import TempListElement from '../shared/listElement';
 
-const StyledListElement = styled(ListElement).attrs(props => ({
+const ListElement = styled(TempListElement).attrs(props => ({
   side: props.side || 'flex-start'
 }))`
   width: 100%;
@@ -12,6 +12,6 @@ const StyledListElement = styled(ListElement).attrs(props => ({
   justify-content: ${props => props.side};
 `;
 
-List.Element = StyledListElement;
+List.Element = ListElement;
 
 export default List;

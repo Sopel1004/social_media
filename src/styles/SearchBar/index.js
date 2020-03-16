@@ -1,24 +1,15 @@
 import styled from 'styled-components';
-import COLORS from '../colors';
+import Search from './search';
 
-const Search = styled.input`
-    width: 90%;
-    padding: 0.5em;
-    border: 1px solid ${COLORS.primaryDark};
-    border-radius: 2em;
+const Form = styled.form`
+  width: 100%;
 
-    &::placeholder {
-        text-align: center;
-    }
-
-    &:focus {
-        outline: 1px solid ${COLORS.secondaryContrast};
-    }
-
-    @media (min-width: 64em) {
-        width: 20vw;
-        margin: 0;
-    }
+  @media (min-width: 64em) {
+    width: 20vw;
+    margin: 0;
+  }
 `;
 
-export default Search;
+Form.Search = Search;
+
+export default Form;

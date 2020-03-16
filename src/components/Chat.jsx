@@ -5,11 +5,14 @@ import { useHistory, useParams } from 'react-router-dom';
 import firebase from '../config/firebase';
 import ChatBottomBar from './ChatBottomBar';
 import ChatMessagesList from './ChatMessagesList';
+import UserContext from './UserContext';
 
 const Chat = () => {
   let history = useHistory();
   const { id } = useParams();
   const [chatData, setChatData] = useState(null);
+  const [userName, setUserName] = useState(null);
+  const currentUser = useContext(UserContext);
 
   useEffect(() => {
     const unsubscribe = firebase
@@ -19,9 +22,25 @@ const Chat = () => {
       .onSnapshot(doc => {
         setChatData(doc.data());
       });
-    console.log('m');
+
     return () => unsubscribe();
   }, [id]);
+
+  useEffect(() => {
+    if (chatData !== null && userName === null) {
+      const [anotherUserId] = chatData.users.filter(
+        user => user !== currentUser.uid
+      );
+      firebase
+        .firestore()
+        .collection('users')
+        .doc(anotherUserId)
+        .get()
+        .then(doc => {
+          setUserName(doc.data().fullName);
+        });
+    }
+  }, [chatData, userName, currentUser]);
 
   const goBack = () => {
     history.goBack();
@@ -31,7 +50,7 @@ const Chat = () => {
     <Section>
       <Section.Header>
         <LeftArrowIcon onClick={goBack} />
-        <Section.H3>{chatData ? 'Name' : 'Loading...'}</Section.H3>
+        <Section.H3>{userName ? userName : 'Loading...'}</Section.H3>
       </Section.Header>
       <ChatMessagesList messages={chatData ? chatData.messages : null} />
       <ChatBottomBar chatID={id} />

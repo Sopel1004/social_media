@@ -5,39 +5,40 @@ import Section from '../styles/shared/section';
 import H2 from '../styles/shared/h2';
 
 function useData() {
-    const [posts, setPosts] = useState(null);
+  const [posts, setPosts] = useState(null);
 
-    useEffect(() => {
-        let isSubscribed = true;
-        let unsubscribe = firebase
-            .firestore()
-            .collection('posts')
-            .orderBy('likes', 'asc')
-            .orderBy('comments', 'asc')
-            .onSnapshot(snapshot => {
-                const newPosts = snapshot.docs.map(doc => ({
-                    id: doc.id,
-                    ...doc.data()
-                }));
-                if (isSubscribed) setPosts(newPosts);
-            });
-        return () => {
-            isSubscribed = false;
-            unsubscribe();
-        };
-    }, []);
+  useEffect(() => {
+    let isSubscribed = true;
+    let unsubscribe = firebase
+      .firestore()
+      .collection('posts')
+      .orderBy('likes', 'asc')
+      .orderBy('comments', 'asc')
+      .onSnapshot(snapshot => {
+        const newPosts = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        if (isSubscribed) setPosts(newPosts);
+      });
+    return () => {
+      isSubscribed = false;
+      unsubscribe();
+      console.log('exit');
+    };
+  }, []);
 
-    return posts;
+  return posts;
 }
 
 const Discover = () => {
-    const posts = useData();
-    return (
-        <Section>
-            <H2>Discover</H2>
-            <PostsList posts={posts} />
-        </Section>
-    );
+  const posts = useData();
+  return (
+    <Section>
+      <H2>Discover</H2>
+      <PostsList posts={posts} />
+    </Section>
+  );
 };
 
 export default Discover;
