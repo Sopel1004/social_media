@@ -1,0 +1,1 @@
+{"version":3,"sources":["style.css"],"names":[],"mappings":"AAAA,EACI,qBAAsB,CACtB,+BACJ,CAEA,UACI,wBAAyB,CACzB,SAAU,CACV,QACJ","file":"main.9db38d50.chunk.css","sourcesContent":["* {\r\n    box-sizing: border-box;\r\n    font-family: 'Nunito', sans-serif;\r\n}\r\n\r\nhtml, body{\r\n    background-color: #fafafa;\r\n    padding: 0;\r\n    margin: 0;\r\n}\r\n"]}
