@@ -1,6 +1,12 @@
 import styled from 'styled-components';
-import List from '../shared/list';
+import TempList from '../shared/list';
 import TempListElement from '../shared/listElement';
+
+const List = styled(TempList)`
+  && {
+    overflow-y: scroll;
+  }
+`;
 
 const ListElement = styled(TempListElement).attrs(props => ({
   side: props.side || 'flex-start'
