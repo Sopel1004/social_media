@@ -47,7 +47,7 @@ const App = () => {
 
   return (
     <UserContext.Provider value={currentUser.user}>
-      <Router basename={process.env.PUBLIC_URL}>
+      <Router>
         <Switch>
           <Route
             exact
