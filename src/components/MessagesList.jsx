@@ -9,7 +9,7 @@ const MessagesList = ({ messages }) => {
       {messages
         ? messages.map(message => (
             <List.Element key={message.id}>
-              <StyledLink to={`${process.env.PUBLIC_URL}/m/${message.id}`}>
+              <StyledLink to={`/m/${message.id}`}>
                 <Message
                   fullName={message.fullName}
                   lastMessage={message.content}

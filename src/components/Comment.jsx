@@ -6,9 +6,7 @@ const Comment = ({ userName, content, createdAt, date, userId, isLast }) => {
   return (
     <StyledComment isLast={isLast}>
       <StyledComment.PostAvatar size="2em" />
-      <StyledComment.StyledLink
-        to={`${process.env.PUBLIC_URL}/profile/${userId}`}
-      >
+      <StyledComment.StyledLink to={`/profile/${userId}`}>
         <StyledComment.Name>{userName}</StyledComment.Name>
       </StyledComment.StyledLink>
       <StyledComment.Date>{timeDifference(date, createdAt)}</StyledComment.Date>

@@ -9,7 +9,7 @@ const FriendsList = ({ friends }) => {
       {friends
         ? friends.map(friend => (
             <List.Element key={friend.id}>
-              <StyledLink to={`${process.env.PUBLIC_URL}/m/${friend.chatID}`}>
+              <StyledLink to={`/m/${friend.chatID}`}>
                 <FriendContact fullName={friend.fullName} />
               </StyledLink>
             </List.Element>

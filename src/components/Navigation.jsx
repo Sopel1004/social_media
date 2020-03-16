@@ -6,36 +6,32 @@ const Navigation = () => {
   const currentUser = useContext(UserContext);
   return (
     <Nav>
-      <Nav.NavLink
-        to={`${process.env.PUBLIC_URL}/home`}
-        activeClassName="selected"
-        aria-label="Home"
-      >
+      <Nav.NavLink to={`/home`} activeClassName="selected" aria-label="Home">
         <Nav.HomeIcon alt="Home" />
       </Nav.NavLink>
       <Nav.NavLink
-        to={`${process.env.PUBLIC_URL}/discover`}
+        to={`/discover`}
         activeClassName="selected"
         aria-label="Discover"
       >
         <Nav.DiscoverIcon alt="Discover" />
       </Nav.NavLink>
       <Nav.NavLink
-        to={`${process.env.PUBLIC_URL}/create_post`}
+        to={`/create_post`}
         activeClassName="selected"
         aria-label="New Post"
       >
         <Nav.NewPostIcon alt="NewPost" />
       </Nav.NavLink>
       <Nav.NavLink
-        to={`${process.env.PUBLIC_URL}/messages`}
+        to={`/messages`}
         activeClassName="selected"
         aria-label="Messages"
       >
         <Nav.MessageIcon alt="Messages" />
       </Nav.NavLink>
       <Nav.NavLink
-        to={`${process.env.PUBLIC_URL}/profile/${currentUser.uid}`}
+        to={`/profile/${currentUser.uid}`}
         activeClassName="selected"
         aria-label="Profile"
       >

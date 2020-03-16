@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { HashRouter, Switch, Route } from 'react-router-dom';
 import Header from './components/Header';
 import LoginView from './components/LoginView';
 import UserContext from './components/UserContext';
@@ -47,44 +47,22 @@ const App = () => {
 
   return (
     <UserContext.Provider value={currentUser.user}>
-      <Router>
+      <HashRouter>
         <Switch>
-          <Route
-            exact
-            path={`${process.env.PUBLIC_URL}/login`}
-            component={LoginView}
-          />
-          <PrivateRoute
-            path={`${process.env.PUBLIC_URL}/`}
-            auth={currentUser.auth}
-          >
+          <Route exact path={`/login`} component={LoginView} />
+          <PrivateRoute path={`/`} auth={currentUser.auth}>
             <Header />
             <Switch>
-              <Route path={`${process.env.PUBLIC_URL}/home`} component={Home} />
-              <Route
-                path={`${process.env.PUBLIC_URL}/discover`}
-                component={Discover}
-              />
-              <Route
-                path={`${process.env.PUBLIC_URL}/create_post`}
-                component={NewPost}
-              />
-              <Route
-                path={`${process.env.PUBLIC_URL}/messages`}
-                component={Messages}
-              />
-              <Route
-                path={`${process.env.PUBLIC_URL}/profile/:id`}
-                component={Profile}
-              />
-              <Route
-                path={`${process.env.PUBLIC_URL}/m/:id`}
-                component={Chat}
-              />
+              <Route path={`/home`} component={Home} />
+              <Route path={`/discover`} component={Discover} />
+              <Route path={`/create_post`} component={NewPost} />
+              <Route path={`/messages`} component={Messages} />
+              <Route path={`/profile/:id`} component={Profile} />
+              <Route path={`/m/:id`} component={Chat} />
             </Switch>
           </PrivateRoute>
         </Switch>
-      </Router>
+      </HashRouter>
     </UserContext.Provider>
   );
 };

@@ -35,7 +35,7 @@ const RegisterForm = ({ history, closeRegisterForm }) => {
           setDateValue('');
           setError(null);
         });
-      history.push(`${process.env.PUBLIC_URL}/home`);
+      history.push(`/home`);
     } catch (error) {
       setError(error.message);
     }

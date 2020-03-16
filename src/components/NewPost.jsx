@@ -37,7 +37,7 @@ const NewPost = () => {
           });
       })
       .then(() => setTextAreaValue(''))
-      .then(() => history.push(`${process.env.PUBLIC_URL}/home`));
+      .then(() => history.push(`/home`));
   };
 
   return (
