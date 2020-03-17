@@ -39,7 +39,6 @@ function useData() {
     return () => {
       isSubscribed = false;
       unsubscribe();
-      console.log('exit');
     };
   }, [currentUser.uid]);
 

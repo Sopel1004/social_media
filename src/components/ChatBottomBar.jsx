@@ -35,7 +35,7 @@ const ChatBottomBar = ({ chatID }) => {
           placeholder="Write a message..."
           value={inputValue}
           onChange={e => setInputValue(e.currentTarget.value)}
-          required
+          autoFocus
         ></Container.Input>
         <Container.SendButton type="submit">Send</Container.SendButton>
       </Container.Form>

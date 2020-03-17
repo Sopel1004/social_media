@@ -11,7 +11,8 @@ const COLORS = {
   loginPageGradient: ['#de3479', '#8b2375'],
   secondaryContrast: '#0291b9',
   unfollow: '#dc1717',
-  messageLight: '#f3f3f3'
+  messageLight: '#f3f3f3',
+  inputBackground: '#eee'
 };
 
 export default COLORS;

@@ -46,6 +46,7 @@ const BottomBar = ({ postId }) => {
           placeholder="Write a comment..."
           value={inputValue}
           onChange={e => setInputValue(e.currentTarget.value)}
+          autoFocus
         ></Container.Input>
         <Container.SendButton type="submit">Send</Container.SendButton>
       </Container.Form>
