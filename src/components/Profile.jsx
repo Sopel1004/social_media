@@ -9,6 +9,7 @@ import ProfileMenu from './ProfileMenu';
 import Section from '../styles/shared/section';
 import H2 from '../styles/shared/h2';
 import StyledProfile from '../styles/Profile';
+import EditProfile from './EditProfile';
 
 function useData(id) {
   const [posts, setPosts] = useState(null);
@@ -43,6 +44,7 @@ const Profile = () => {
   const [isFollowed, setIsFollowed] = useState(false);
   const posts = useData(id);
   const [isVisible, setIsVisible] = useState(false);
+  const [isActiveEditProfile, setIsActiveEditProfile] = useState(false);
 
   useEffect(() => {
     let isSubscribed = true;
@@ -120,13 +122,14 @@ const Profile = () => {
             tabIndex={0}
             role="button"
             aria-label="More"
-            onKeyDown={e =>
-              e.key === 'Enter' ? setIsVisible(!isVisible) : null
-            }
+            onKeyDown={e => e.key === 'Enter' && setIsVisible(!isVisible)}
           />
         )}
         {isVisible && (
-          <ProfileMenu closeMenu={() => setIsVisible(!isVisible)} />
+          <ProfileMenu
+            closeMenu={() => setIsVisible(!isVisible)}
+            openEditProfile={() => setIsActiveEditProfile(!isActiveEditProfile)}
+          />
         )}
       </StyledProfile.TopBar>
 
@@ -160,6 +163,11 @@ const Profile = () => {
       )}
 
       <PostsList posts={posts} marginTop={'50px'} />
+      {isActiveEditProfile && (
+        <EditProfile
+          closeSection={() => setIsActiveEditProfile(!isActiveEditProfile)}
+        />
+      )}
     </Section>
   );
 };

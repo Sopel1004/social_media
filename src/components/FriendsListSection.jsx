@@ -65,7 +65,6 @@ const FriendsListSection = ({ closeFriendsList }) => {
               });
           });
       });
-    console.log('X');
   }, [currentUser.uid]);
 
   return (

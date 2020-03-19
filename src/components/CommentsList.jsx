@@ -13,7 +13,7 @@ const CommentsList = ({ comments, date, userId }) => {
                 userName={comment.userName}
                 createdAt={comment.createdAt}
                 date={date}
-                userId={userId}
+                userId={comment.userId}
                 isLast={index === comments.length - 1}
               />
             </List.Element>

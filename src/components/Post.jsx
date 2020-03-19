@@ -87,7 +87,6 @@ const Post = ({
           postId={postId}
           comments={comments}
           date={date}
-          userId={userId}
           isCommentSectionActive={isActive}
           closeCommentsSection={() => setIsActive(!isActive)}
         />

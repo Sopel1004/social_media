@@ -7,10 +7,6 @@ const Input = styled.input`
   border: 1px solid ${COLORS.inputBackground};
   background-color: ${COLORS.inputBackground};
   border-radius: 1em;
-
-  &:focus {
-    outline: 2px solid ${COLORS.secondaryContrast};
-  }
 `;
 
 export default Input;

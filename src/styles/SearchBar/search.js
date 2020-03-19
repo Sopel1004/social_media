@@ -13,10 +13,6 @@ const Search = styled.input`
   &::placeholder {
     text-align: center;
   }
-
-  &:focus {
-    outline: 1px solid ${COLORS.secondaryContrast};
-  }
 `;
 
 export default Search;
