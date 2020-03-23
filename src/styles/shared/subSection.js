@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import COLORS from '../colors';
 import Header from './header';
 import H3 from './h3';
+import { ReactComponent as ArrowIcon } from '../../images/arrow-left.svg';
 
 const Section = styled.section`
   width: 100vw;
@@ -22,5 +23,6 @@ const Section = styled.section`
 
 Section.Header = Header;
 Section.H3 = H3;
+Section.ArrowIcon = ArrowIcon;
 
 export default Section;
