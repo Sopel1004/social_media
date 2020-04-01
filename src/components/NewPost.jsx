@@ -13,31 +13,33 @@ const NewPost = () => {
 
   const addPost = async e => {
     e.preventDefault();
-
-    let userData;
-    await firebase
-      .firestore()
-      .collection('users')
-      .doc(currentUser.uid)
-      .get()
-      .then(doc => {
-        userData = doc.data();
-      })
-      .then(() => {
-        firebase
-          .firestore()
-          .collection('posts')
-          .add({
-            userId: currentUser.uid,
-            userName: userData.fullName,
-            content: textAreaValue,
-            createdAt: Date.now(),
-            likes: [],
-            comments: []
-          });
-      })
-      .then(() => setTextAreaValue(''))
-      .then(() => history.push(`/home`));
+    if (textAreaValue) {
+      let userData;
+      await firebase
+        .firestore()
+        .collection('users')
+        .doc(currentUser.uid)
+        .get()
+        .then(doc => {
+          userData = doc.data();
+        })
+        .then(() => {
+          firebase
+            .firestore()
+            .collection('posts')
+            .add({
+              userId: currentUser.uid,
+              userName: userData.fullName,
+              content: textAreaValue,
+              createdAt: Date.now(),
+              likes: [],
+              likesNumber: 0,
+              comments: []
+            });
+        })
+        .then(() => setTextAreaValue(''))
+        .then(() => history.push(`/home`));
+    }
   };
 
   return (
@@ -50,7 +52,9 @@ const NewPost = () => {
           value={textAreaValue}
           onChange={e => setTextAreaValue(e.currentTarget.value)}
         ></Form.Textarea>
-        <Form.Button type="submit">Post</Form.Button>
+        <Form.Button type="submit" disabled={!textAreaValue}>
+          Post
+        </Form.Button>
       </Form>
     </Section>
   );

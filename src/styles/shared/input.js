@@ -6,7 +6,7 @@ const Input = styled.input`
   padding: 0.25em 0.5em;
   margin: 0.1em 0.25em 0.75em 0.25em;
   border: 1px solid ${COLORS.primaryDark};
-  border-radius: 1em;
+  border-radius: 0.45em;
 `;
 
 export default Input;

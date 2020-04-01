@@ -3,9 +3,8 @@ import Avatar from './Avatar';
 import PostsList from './PostsList';
 import UserContext from './UserContext';
 import { useParams } from 'react-router-dom';
-import { ReactComponent as MoreIcon } from '../images/more-vertical.svg';
+import { ReactComponent as SettingsIcon } from '../images/settings.svg';
 import firebase from '../config/firebase';
-import ProfileMenu from './ProfileMenu';
 import Section from '../styles/shared/section';
 import H2 from '../styles/shared/h2';
 import StyledProfile from '../styles/Profile';
@@ -43,7 +42,6 @@ const Profile = () => {
   const [userData, setUserData] = useState(null);
   const [isFollowed, setIsFollowed] = useState(false);
   const posts = useData(id);
-  const [isVisible, setIsVisible] = useState(false);
   const [isActiveEditProfile, setIsActiveEditProfile] = useState(false);
 
   useEffect(() => {
@@ -117,18 +115,14 @@ const Profile = () => {
       <StyledProfile.TopBar>
         <H2>Profile</H2>
         {currentUser.uid === id && (
-          <MoreIcon
-            onClick={() => setIsVisible(!isVisible)}
+          <SettingsIcon
+            onClick={() => setIsActiveEditProfile(!isActiveEditProfile)}
             tabIndex={0}
             role="button"
             aria-label="More"
-            onKeyDown={e => e.key === 'Enter' && setIsVisible(!isVisible)}
-          />
-        )}
-        {isVisible && (
-          <ProfileMenu
-            closeMenu={() => setIsVisible(!isVisible)}
-            openEditProfile={() => setIsActiveEditProfile(!isActiveEditProfile)}
+            onKeyDown={e =>
+              e.key === 'Enter' && setIsActiveEditProfile(!isActiveEditProfile)
+            }
           />
         )}
       </StyledProfile.TopBar>

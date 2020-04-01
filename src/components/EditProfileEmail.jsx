@@ -9,20 +9,20 @@ import firebase from '../config/firebase';
 const EditProfileEmail = ({ closeSection }) => {
   const currentUser = useContext(UserContext);
   const [inputValue, setInputValue] = useState(currentUser.email);
+  const [currentPasswordValue, setCurrentPasswordValue] = useState('');
   const [emailError, setEmailError] = useState(null);
   const [approval, setApproval] = useState(null);
 
   const changeEmail = async e => {
     e.preventDefault();
     setApproval('');
-    const reg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (inputValue) {
+    const reg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (inputValue && currentPasswordValue) {
       if (reg.exec(inputValue)) {
-        const password = prompt('Rewrite password to approve');
         const user = firebase.auth().currentUser;
         const credential = firebase.auth.EmailAuthProvider.credential(
           user.email,
-          password
+          currentPasswordValue
         );
         await user
           .reauthenticateWithCredential(credential)
@@ -31,6 +31,7 @@ const EditProfileEmail = ({ closeSection }) => {
               .updateEmail(inputValue)
               .then(() => {
                 setEmailError(null);
+                setCurrentPasswordValue('');
                 setApproval('Password has been changed.');
                 setTimeout(() => setApproval(null), 2000);
               })
@@ -58,6 +59,13 @@ const EditProfileEmail = ({ closeSection }) => {
           id="emailInput"
           value={inputValue}
           onChange={e => setInputValue(e.currentTarget.value)}
+        />
+        <label htmlFor="currentPasswordInput">Current password</label>
+        <Form.Input
+          type="password"
+          id="currentPasswordInput"
+          value={currentPasswordValue}
+          onChange={e => setCurrentPasswordValue(e.currentTarget.value)}
         />
         {emailError && <ErrorMessage>{emailError}</ErrorMessage>}
         <Form.Button type="submit">Save</Form.Button>

@@ -7,23 +7,35 @@ const LoginForm = ({ history, closeLoginForm }) => {
   const [emailValue, setEmailValue] = useState('test@xx.xx');
   const [passwordValue, setPasswordValue] = useState('123456');
   const [error, setError] = useState(null);
+
   const SignIn = async e => {
     e.preventDefault();
-    try {
-      await firebase
-        .auth()
-        .setPersistence(firebase.auth.Auth.Persistence.SESSION)
-        .then(() =>
-          firebase.auth().signInWithEmailAndPassword(emailValue, passwordValue)
-        )
-        .then(() => {
-          setEmailValue('');
-          setPasswordValue('');
-          setError(null);
-        });
-      history.push(`/home`);
-    } catch (error) {
-      setError(error.message);
+    const reg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (emailValue && passwordValue) {
+      if (reg.exec(emailValue)) {
+        try {
+          await firebase
+            .auth()
+            .setPersistence(firebase.auth.Auth.Persistence.SESSION)
+            .then(() =>
+              firebase
+                .auth()
+                .signInWithEmailAndPassword(emailValue, passwordValue)
+            )
+            .then(() => {
+              setEmailValue('');
+              setPasswordValue('');
+              setError(null);
+            });
+          history.push(`/home`);
+        } catch (error) {
+          setError(error.message);
+        }
+      } else {
+        setError(`Email isn't correct.`);
+      }
+    } else {
+      setError('Field is empty.');
     }
   };
   return (

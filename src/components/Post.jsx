@@ -10,6 +10,7 @@ const Post = ({
   createdAt,
   content,
   likes,
+  likesNumber,
   commentsNumber,
   postId,
   comments,
@@ -33,7 +34,8 @@ const Post = ({
           .collection('posts')
           .doc(postId)
           .update({
-            likes: firebase.firestore.FieldValue.arrayRemove(currentUser.uid)
+            likes: firebase.firestore.FieldValue.arrayRemove(currentUser.uid),
+            likesNumber: firebase.firestore.FieldValue.increment(-1)
           });
       } else {
         await firebase
@@ -41,7 +43,8 @@ const Post = ({
           .collection('posts')
           .doc(postId)
           .update({
-            likes: firebase.firestore.FieldValue.arrayUnion(currentUser.uid)
+            likes: firebase.firestore.FieldValue.arrayUnion(currentUser.uid),
+            likesNumber: firebase.firestore.FieldValue.increment(1)
           });
       }
     } catch (error) {
@@ -73,7 +76,7 @@ const Post = ({
             onClick={() => addToLiked()}
           />
         )}
-        <StyledPost.LikesNumber>{likes.length}</StyledPost.LikesNumber>
+        <StyledPost.LikesNumber>{likesNumber}</StyledPost.LikesNumber>
         <StyledPost.Comment
           role="button"
           tabIndex={0}

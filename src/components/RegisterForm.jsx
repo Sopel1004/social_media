@@ -11,33 +11,42 @@ const RegisterForm = ({ history, closeRegisterForm }) => {
   const [error, setError] = useState(null);
   const SignUp = async e => {
     e.preventDefault();
-    try {
-      await firebase
-        .auth()
-        .createUserWithEmailAndPassword(emailValue, passwordValue)
-        .then(cred => {
-          return firebase
-            .firestore()
-            .collection('users')
-            .doc(cred.user.uid)
-            .set({
-              fullName: fullNameValue,
-              dateOfBirth: dateValue,
-              followers: [],
-              following: [],
-              searchTags: [...fullNameValue.toLowerCase()]
+    const reg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (emailValue && passwordValue && fullNameValue && dateValue) {
+      if (reg.exec(emailValue)) {
+        try {
+          await firebase
+            .auth()
+            .createUserWithEmailAndPassword(emailValue, passwordValue)
+            .then(cred => {
+              return firebase
+                .firestore()
+                .collection('users')
+                .doc(cred.user.uid)
+                .set({
+                  fullName: fullNameValue,
+                  dateOfBirth: dateValue,
+                  followers: [],
+                  following: [],
+                  searchTags: [...fullNameValue.toLowerCase()]
+                });
+            })
+            .then(() => {
+              setEmailValue('');
+              setPasswordValue('');
+              setFullNameValue('');
+              setDateValue('');
+              setError(null);
             });
-        })
-        .then(() => {
-          setEmailValue('');
-          setPasswordValue('');
-          setFullNameValue('');
-          setDateValue('');
-          setError(null);
-        });
-      history.push(`/home`);
-    } catch (error) {
-      setError(error.message);
+          history.push(`/home`);
+        } catch (error) {
+          setError(error.message);
+        }
+      } else {
+        setError(`Email isn't correct.`);
+      }
+    } else {
+      setError('Field is empty.');
     }
   };
 

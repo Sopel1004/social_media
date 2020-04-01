@@ -5,7 +5,7 @@ const Section = styled.div`
   width: 100vw;
   height: 100vh;
   background-color: ${COLORS.primary};
-  padding: 4em 0.5em 0.5em 0.5em;
+  padding: 4em 0.5em 1em 0.5em;
   position: absolute;
   top: 0;
   left: 0;

@@ -12,8 +12,7 @@ function useData() {
     let unsubscribe = firebase
       .firestore()
       .collection('posts')
-      .orderBy('likes', 'asc')
-      .orderBy('comments', 'asc')
+      .orderBy('likesNumber', 'desc')
       .onSnapshot(snapshot => {
         const newPosts = snapshot.docs.map(doc => ({
           id: doc.id,
@@ -24,7 +23,6 @@ function useData() {
     return () => {
       isSubscribed = false;
       unsubscribe();
-      console.log('exit');
     };
   }, []);
 
