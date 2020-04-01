@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "e741f157b68c8b4c2b91117b0036364d",
+    "revision": "1b7f2d3bb3fe4bbe61c1b8b886f883a3",
     "url": "/social_media/index.html"
   },
   {
-    "revision": "ae61d2dc4b1c18cf7fe5",
+    "revision": "0131863c9b38bb6d5c8c",
     "url": "/social_media/static/css/main.9db38d50.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/social_media/static/js/2.ee92d284.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "ae61d2dc4b1c18cf7fe5",
-    "url": "/social_media/static/js/main.51ccc723.chunk.js"
+    "revision": "0131863c9b38bb6d5c8c",
+    "url": "/social_media/static/js/main.eb6265b2.chunk.js"
   },
   {
     "revision": "cc41f094d781b6eede4f",
@@ -36,20 +36,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/social_media/static/media/comment.77be0c9a.svg"
   },
   {
-    "revision": "39a1e9de1b0ce19ed94ac3c518184b47",
-    "url": "/social_media/static/media/edit.39a1e9de.svg"
-  },
-  {
     "revision": "6633ca71a4a9f301191b19a0d04556bf",
     "url": "/social_media/static/media/globe.6633ca71.svg"
   },
   {
     "revision": "d4d1d5e6c1404783b92010f6302cc54f",
     "url": "/social_media/static/media/home.d4d1d5e6.svg"
-  },
-  {
-    "revision": "76139bb8b51054d85b5d1e06b136f73a",
-    "url": "/social_media/static/media/info.76139bb8.svg"
   },
   {
     "revision": "7b312179ef90c4f58046e1013f1f025d",
@@ -64,10 +56,6 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/social_media/static/media/mail.9432f119.svg"
   },
   {
-    "revision": "0d88bebf55c3366242ce522e0697a82c",
-    "url": "/social_media/static/media/more-vertical.0d88bebf.svg"
-  },
-  {
     "revision": "c47e0402699393af38b07cc820a68eaf",
     "url": "/social_media/static/media/plus-circle.c47e0402.svg"
   },
@@ -78,6 +66,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "b6c1596b1e1b0f51b933065050ffcfb1",
     "url": "/social_media/static/media/search.b6c1596b.svg"
+  },
+  {
+    "revision": "a52c41698eca31e0868152d04af9eab9",
+    "url": "/social_media/static/media/settings.a52c4169.svg"
   },
   {
     "revision": "ad961ef40ee0327d989c203e83280276",
