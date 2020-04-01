@@ -1,5 +1,5 @@
 ### Social media 
-Web application created base on popular sites like Facebook, Instagram etc. 
+Web application created inspired on popular sites like Facebook, Instagram etc. 
 
 ### Technologies used
 -React
