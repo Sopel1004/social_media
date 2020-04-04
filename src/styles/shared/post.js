@@ -3,18 +3,18 @@ import COLORS from '../colors';
 import { Link } from 'react-router-dom';
 import PostAvatar from './postAvatar';
 
-const Name = styled.p`
+const Name = styled.span`
   margin: 0;
   font-weight: 700;
 `;
 
-const Date = styled.p`
+const Date = styled.span`
   font-size: 0.75em;
   margin: 0;
   grid-area: date;
 `;
 
-const Content = styled.p`
+const Content = styled.span`
   margin: 0.25em 0;
   padding: 0.25em;
   grid-area: content;
@@ -39,7 +39,7 @@ const StyledPost = styled.article`
   grid-template-columns: 2.5em 2.5em 2.5em 2.5em 1fr;
   grid-template-rows: 1.25em 1.25em auto;
   grid-template-areas:
-    'avatar userName userName userName .'
+    'avatar userName userName userName userName'
     'avatar date date date .'
     'content content content content content'
     'image image image image image'
