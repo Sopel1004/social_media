@@ -1,6 +1,7 @@
 import React from 'react';
 import List from '../styles/PostList';
 import Post from './Post';
+import Loading from './Loading';
 
 const PostsList = ({ posts, marginTop }) => {
   const date = Date.now();
@@ -9,7 +10,7 @@ const PostsList = ({ posts, marginTop }) => {
     <List marginTop={marginTop}>
       {posts ? (
         posts.length ? (
-          posts.map(post => (
+          posts.map((post) => (
             <List.Element key={post.id}>
               <Post
                 content={post.content}
@@ -22,6 +23,7 @@ const PostsList = ({ posts, marginTop }) => {
                 comments={post.comments}
                 date={date}
                 userId={post.userId}
+                imageSrc={post.image}
               />
             </List.Element>
           ))
@@ -29,7 +31,7 @@ const PostsList = ({ posts, marginTop }) => {
           <p>{`Nothing is here. Let's follow somebody.`}</p>
         )
       ) : (
-        <p>{'Loading...'}</p>
+        <Loading />
       )}
     </List>
   );

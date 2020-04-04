@@ -19,7 +19,7 @@ const Chat = () => {
       .firestore()
       .collection('messages')
       .doc(id)
-      .onSnapshot(doc => {
+      .onSnapshot((doc) => {
         setChatData(doc.data());
       });
 
@@ -29,14 +29,14 @@ const Chat = () => {
   useEffect(() => {
     if (chatData !== null && userName === null) {
       const [anotherUserId] = chatData.users.filter(
-        user => user !== currentUser.uid
+        (user) => user !== currentUser.uid
       );
       firebase
         .firestore()
         .collection('users')
         .doc(anotherUserId)
         .get()
-        .then(doc => {
+        .then((doc) => {
           setUserName(doc.data().fullName);
         });
     }
@@ -49,7 +49,14 @@ const Chat = () => {
   return (
     <Section>
       <Section.Header>
-        <LeftArrowIcon onClick={goBack} />
+        <LeftArrowIcon
+          onClick={goBack}
+          tabIndex={0}
+          role="button"
+          aria-label="More"
+          style={{ cursor: 'pointer' }}
+          onKeyDown={(e) => e.key === 'Enter' && goBack}
+        />
         <Section.H3>{userName ? userName : 'Loading...'}</Section.H3>
       </Section.Header>
       <ChatMessagesList messages={chatData ? chatData.messages : null} />

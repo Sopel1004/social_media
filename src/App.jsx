@@ -11,30 +11,31 @@ import Messages from './components/Messages';
 import Profile from './components/Profile';
 import Chat from './components/Chat';
 import firebase from './config/firebase';
+import Loading from './components/Loading';
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState({
     auth: false,
     user: null,
-    loading: true
+    loading: true,
   });
 
   useEffect(() => {
     let isSubscribed = true;
-    firebase.auth().onAuthStateChanged(user => {
+    firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         if (isSubscribed)
           setCurrentUser({
             auth: true,
             user: user,
-            loading: false
+            loading: false,
           });
       } else {
         if (isSubscribed)
           setCurrentUser({
             auth: false,
             user: null,
-            loading: false
+            loading: false,
           });
       }
     });
@@ -42,7 +43,7 @@ const App = () => {
   }, []);
 
   if (currentUser.loading) {
-    return <p>Loading...</p>;
+    return <Loading />;
   }
 
   return (

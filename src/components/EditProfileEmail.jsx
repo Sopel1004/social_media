@@ -13,7 +13,7 @@ const EditProfileEmail = ({ closeSection }) => {
   const [emailError, setEmailError] = useState(null);
   const [approval, setApproval] = useState(null);
 
-  const changeEmail = async e => {
+  const changeEmail = async (e) => {
     e.preventDefault();
     setApproval('');
     const reg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -35,9 +35,9 @@ const EditProfileEmail = ({ closeSection }) => {
                 setApproval('Password has been changed.');
                 setTimeout(() => setApproval(null), 2000);
               })
-              .catch(error => setEmailError(error.message));
+              .catch((error) => setEmailError(error.message));
           })
-          .catch(error => setEmailError(error.message));
+          .catch((error) => setEmailError(error.message));
       } else {
         setEmailError('Email is incorrect');
       }
@@ -48,7 +48,13 @@ const EditProfileEmail = ({ closeSection }) => {
   return (
     <Section>
       <Section.Header>
-        <Section.ArrowIcon onClick={closeSection} />
+        <Section.ArrowIcon
+          onClick={closeSection}
+          tabIndex={0}
+          role="button"
+          aria-label="Close"
+          onKeyDown={(e) => e.key === 'Enter' && closeSection}
+        />
         <Section.H3>Change email</Section.H3>
       </Section.Header>
       <Form onSubmit={changeEmail}>
@@ -58,14 +64,14 @@ const EditProfileEmail = ({ closeSection }) => {
           type="email"
           id="emailInput"
           value={inputValue}
-          onChange={e => setInputValue(e.currentTarget.value)}
+          onChange={(e) => setInputValue(e.currentTarget.value)}
         />
         <label htmlFor="currentPasswordInput">Current password</label>
         <Form.Input
           type="password"
           id="currentPasswordInput"
           value={currentPasswordValue}
-          onChange={e => setCurrentPasswordValue(e.currentTarget.value)}
+          onChange={(e) => setCurrentPasswordValue(e.currentTarget.value)}
         />
         {emailError && <ErrorMessage>{emailError}</ErrorMessage>}
         <Form.Button type="submit">Save</Form.Button>

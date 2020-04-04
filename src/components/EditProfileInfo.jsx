@@ -19,13 +19,13 @@ const EditProfileEmail = ({ closeSection }) => {
       .collection('users')
       .doc(currentUser.uid)
       .get()
-      .then(doc => {
+      .then((doc) => {
         setFullNameValue(doc.data().fullName);
         setBirthValue(doc.data().dateOfBirth);
       });
   }, [currentUser.uid]);
 
-  const changeProfileInfo = async e => {
+  const changeProfileInfo = async (e) => {
     e.preventDefault();
     setApproval('');
     if (fullNameValue && birthValue) {
@@ -35,14 +35,14 @@ const EditProfileEmail = ({ closeSection }) => {
         .doc(currentUser.uid)
         .update({
           fullName: fullNameValue,
-          dateOfBirth: birthValue
+          dateOfBirth: birthValue,
         })
         .then(() => {
           setApproval('Data has been updated.');
           setError(null);
           setTimeout(() => setApproval(null), 2000);
         })
-        .catch(error => setError(error.message));
+        .catch((error) => setError(error.message));
     } else {
       setError('Field is empty.');
     }
@@ -50,7 +50,13 @@ const EditProfileEmail = ({ closeSection }) => {
   return (
     <Section>
       <Section.Header>
-        <Section.ArrowIcon onClick={closeSection} />
+        <Section.ArrowIcon
+          onClick={closeSection}
+          tabIndex={0}
+          role="button"
+          aria-label="Close"
+          onKeyDown={(e) => e.key === 'Enter' && closeSection}
+        />
         <Section.H3>Change profile info</Section.H3>
       </Section.Header>
       <Form onSubmit={changeProfileInfo}>
@@ -60,14 +66,14 @@ const EditProfileEmail = ({ closeSection }) => {
           type="text"
           id="fullNameInput"
           value={fullNameValue}
-          onChange={e => setFullNameValue(e.currentTarget.value)}
+          onChange={(e) => setFullNameValue(e.currentTarget.value)}
         />
         <label htmlFor="birthInput">Date of birth</label>
         <Form.Input
           type="date"
           id="birthInput"
           value={birthValue}
-          onChange={e => setBirthValue(e.currentTarget.value)}
+          onChange={(e) => setBirthValue(e.currentTarget.value)}
         />
         {error && <ErrorMessage>{error}</ErrorMessage>}
         <Form.Button type="submit">Save</Form.Button>

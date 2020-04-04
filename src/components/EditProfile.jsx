@@ -18,29 +18,54 @@ const EditProfile = ({ closeSection }) => {
   return (
     <Section>
       <Section.Header>
-        <Section.ArrowIcon onClick={closeSection} />
+        <Section.ArrowIcon
+          onClick={closeSection}
+          tabIndex={0}
+          role="button"
+          aria-label="Close"
+          style={{ cursor: 'pointer' }}
+          onKeyDown={(e) => e.key === 'Enter' && closeSection}
+        />
         <Section.H3>Settings</Section.H3>
       </Section.Header>
       <List>
-        <List.Element onClick={() => setIsActiveEditEmail(!isActiveEditEmail)}>
+        <List.Element
+          onClick={() => setIsActiveEditEmail(!isActiveEditEmail)}
+          onKeyDown={(e) =>
+            e.key === 'Enter' && setIsActiveEditEmail(!isActiveEditEmail)
+          }
+          tabIndex={0}
+          role="button"
+        >
           <MailIcon />
           <Span>Email</Span>
         </List.Element>
         <List.Element
           onClick={() => setIsActiveEditProfileInfo(!isActiveEditProfileInfo)}
+          onKeyDown={(e) =>
+            e.key === 'Enter' &&
+            setIsActiveEditProfileInfo(!isActiveEditProfileInfo)
+          }
+          tabIndex={0}
+          role="button"
         >
           <UserIcon />
           <Span>Profile info</Span>
         </List.Element>
         <List.Element
           onClick={() => setIsActiveEditPassword(!isActiveEditPassword)}
+          onKeyDown={(e) =>
+            e.key === 'Enter' && setIsActiveEditPassword(!isActiveEditPassword)
+          }
+          tabIndex={0}
+          role="button"
         >
           <ShieldIcon />
           <Span>Password</Span>
         </List.Element>
         <List.Element
           onClick={() => firebase.auth().signOut()}
-          onKeyDown={e => e.key === 'Enter' && firebase.auth().signOut()}
+          onKeyDown={(e) => e.key === 'Enter' && firebase.auth().signOut()}
           tabIndex={0}
           role="button"
         >

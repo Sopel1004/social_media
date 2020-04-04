@@ -18,7 +18,8 @@ const ProfileMenu = ({ closeMenu, openEditProfile }) => {
             tabIndex={0}
             role="button"
             aria-label="Close"
-            onKeyDown={e => e.key === 'Enter' && closeMenu()}
+            style={{ cursor: 'pointer' }}
+            onKeyDown={(e) => e.key === 'Enter' && closeMenu()}
           />
           <Menu.Ul>
             <Menu.Li tabIndex={0} role="button" onClick={openEditProfile}>

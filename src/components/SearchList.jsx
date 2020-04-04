@@ -7,7 +7,7 @@ const SearchList = ({ searchResult, closeSearchSection }) => {
   return (
     <List>
       {searchResult
-        ? searchResult.map(result => (
+        ? searchResult.map((result) => (
             <List.Element key={result.userId}>
               <StyledLink
                 to={`/profile/${result.userId}`}

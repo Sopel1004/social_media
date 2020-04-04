@@ -33,12 +33,12 @@ const LoginView = () => {
     tl.from(image, {
       autoAlpha: 0,
       scale: 0.5,
-      duration: 2
+      duration: 2,
     })
       .fromTo(
         feeds,
         {
-          y: '+=30'
+          y: '+=30',
         },
         { y: 0, autoAlpha: 1, duration: 1 }
       )
@@ -49,33 +49,33 @@ const LoginView = () => {
         {
           y: '-=50',
           duration: 0.5,
-          autoAlpha: 0
+          autoAlpha: 0,
         },
         '-=0.8'
       )
       .fromTo(
         feeds,
         {
-          y: '+=10'
+          y: '+=10',
         },
         { y: 0, autoAlpha: 1, duration: 2 }
       );
   }, [ilustration]);
 
-  const onEnter = node => {
+  const onEnter = (node) => {
     gsap.from(node, {
       opacity: 0,
       x: 50,
       duration: 1,
-      delay: 0.5
+      delay: 0.5,
     });
   };
 
-  const onExit = node => {
+  const onExit = (node) => {
     gsap.to(node, {
       opacity: 0,
       x: 50,
-      duration: 0.5
+      duration: 0.5,
     });
   };
   return (
@@ -103,38 +103,6 @@ const LoginView = () => {
       >
         <RegisterForm closeRegisterForm={changeForms} />
       </CSSTransition>
-      {/*{!loginFormIsActive && !registerFormIsActive && (
-                <>
-                    <LoginPage.WelcomeText>Welcome</LoginPage.WelcomeText>
-                    <LoginPage.Button
-                        onClick={() => setLoginFormIsActive(!loginFormIsActive)}
-                    >
-                        Sign in
-                    </LoginPage.Button>
-                    <p>- OR -</p>
-                    <LoginPage.Button
-                        onClick={() =>
-                            setRegisterFormIsActive(!registerFormIsActive)
-                        }
-                    >
-                        Sign up
-                    </LoginPage.Button>
-                </>
-            )}
-            {loginFormIsActive && (
-                <LoginForm
-                    closeLoginForm={() =>
-                        setLoginFormIsActive(!loginFormIsActive)
-                    }
-                />
-            )}
-            {registerFormIsActive && (
-                <RegisterForm
-                    closeRegisterForm={() =>
-                        setRegisterFormIsActive(!registerFormIsActive)
-                    }
-                />
-                )}*/}
     </LoginPage>
   );
 };

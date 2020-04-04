@@ -12,7 +12,7 @@ const EditProfilePassword = ({ closeSection }) => {
   const [passwordError, setPasswordError] = useState(null);
   const [approval, setApproval] = useState(null);
 
-  const changePassword = async e => {
+  const changePassword = async (e) => {
     e.preventDefault();
     setApproval('');
     if (currentPasswordValue && newPasswordValue && rePasswordValue) {
@@ -32,9 +32,9 @@ const EditProfilePassword = ({ closeSection }) => {
                 setApproval('Password has been changed.');
                 setTimeout(() => setApproval(null), 2000);
               })
-              .catch(error => setPasswordError(error.message));
+              .catch((error) => setPasswordError(error.message));
           })
-          .catch(error => setPasswordError(error.message));
+          .catch((error) => setPasswordError(error.message));
       } else {
         setPasswordError(`Passwords isn't same.`);
       }
@@ -45,7 +45,13 @@ const EditProfilePassword = ({ closeSection }) => {
   return (
     <Section>
       <Section.Header>
-        <Section.ArrowIcon onClick={closeSection} />
+        <Section.ArrowIcon
+          onClick={closeSection}
+          tabIndex={0}
+          role="button"
+          aria-label="Close"
+          onKeyDown={(e) => e.key === 'Enter' && closeSection}
+        />
         <Section.H3>Change password</Section.H3>
       </Section.Header>
       <Form onSubmit={changePassword}>
@@ -55,21 +61,21 @@ const EditProfilePassword = ({ closeSection }) => {
           type="password"
           id="currentPasswordInput"
           value={currentPasswordValue}
-          onChange={e => setCurrentPasswordValue(e.currentTarget.value)}
+          onChange={(e) => setCurrentPasswordValue(e.currentTarget.value)}
         />
         <label htmlFor="newPasswordInput">New password</label>
         <Form.Input
           type="password"
           id="newPasswordInput"
           value={newPasswordValue}
-          onChange={e => setNewPasswordValue(e.currentTarget.value)}
+          onChange={(e) => setNewPasswordValue(e.currentTarget.value)}
         />
         <label htmlFor="repasswordInput">Re-write new password</label>
         <Form.Input
           type="password"
           id="repasswordInput"
           value={rePasswordValue}
-          onChange={e => setRePasswordValue(e.currentTarget.value)}
+          onChange={(e) => setRePasswordValue(e.currentTarget.value)}
         />
         {passwordError && <ErrorMessage>{passwordError}</ErrorMessage>}
         <Form.Button type="submit">Save</Form.Button>

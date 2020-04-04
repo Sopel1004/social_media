@@ -17,19 +17,19 @@ const FriendsListSection = ({ closeFriendsList }) => {
       .collection('users')
       .doc(currentUser.uid)
       .get()
-      .then(doc => (userFriendsId = doc.data().following))
+      .then((doc) => (userFriendsId = doc.data().following))
       .then(() => {
         firebase
           .firestore()
           .collection('users')
           .get()
-          .then(snapshot => {
-            const temp = snapshot.docs.map(doc => ({
+          .then((snapshot) => {
+            const temp = snapshot.docs.map((doc) => ({
               id: doc.id,
-              fullName: doc.data().fullName
+              fullName: doc.data().fullName,
             }));
 
-            userFriends = temp.filter(el => userFriendsId.includes(el.id));
+            userFriends = temp.filter((el) => userFriendsId.includes(el.id));
           })
           .then(() => {
             firebase
@@ -37,24 +37,24 @@ const FriendsListSection = ({ closeFriendsList }) => {
               .collection('messages')
               .where('users', 'array-contains', currentUser.uid)
               .get()
-              .then(snapshot => {
-                const chatID = snapshot.docs.map(doc => {
+              .then((snapshot) => {
+                const chatID = snapshot.docs.map((doc) => {
                   const [anotherUserId] = doc
                     .data()
-                    .users.filter(user => user !== currentUser.uid);
+                    .users.filter((user) => user !== currentUser.uid);
                   return {
                     id: doc.id,
-                    userID: anotherUserId
+                    userID: anotherUserId,
                   };
                 });
 
-                const newUserFriends = userFriends.map(friend => {
+                const newUserFriends = userFriends.map((friend) => {
                   let newEl;
-                  chatID.forEach(el => {
+                  chatID.forEach((el) => {
                     if (friend.id === el.userID) {
                       newEl = {
                         ...friend,
-                        chatID: el.id
+                        chatID: el.id,
                       };
                     }
                   });
@@ -70,7 +70,14 @@ const FriendsListSection = ({ closeFriendsList }) => {
   return (
     <Section>
       <Section.Header>
-        <LeftArrowIcon onClick={closeFriendsList} />
+        <LeftArrowIcon
+          onClick={closeFriendsList}
+          tabIndex={0}
+          role="button"
+          aria-label="More"
+          style={{ cursor: 'pointer' }}
+          onKeyDown={(e) => e.key === 'Enter' && closeFriendsList}
+        />
         <Section.H3>New message</Section.H3>
       </Section.Header>
       <FriendsList friends={friends} />

@@ -18,7 +18,7 @@ function useData() {
       .collection('users')
       .doc(currentUser.uid)
       .get()
-      .then(doc => (userFollowing = doc.data().following))
+      .then((doc) => (userFollowing = doc.data().following))
       .then(() => {
         unsubscribe = firebase
           .firestore()
@@ -26,14 +26,14 @@ function useData() {
           .where('userId', 'in', [...userFollowing, currentUser.uid])
           .orderBy('createdAt', 'desc')
           .onSnapshot(
-            snapshot => {
-              const newPosts = snapshot.docs.map(doc => ({
+            (snapshot) => {
+              const newPosts = snapshot.docs.map((doc) => ({
                 id: doc.id,
-                ...doc.data()
+                ...doc.data(),
               }));
               if (isSubscribed) setPosts(newPosts);
             },
-            error => console.log(error)
+            (error) => console.log(error)
           );
       });
     return () => {

@@ -9,6 +9,9 @@ import Section from '../styles/shared/section';
 import H2 from '../styles/shared/h2';
 import StyledProfile from '../styles/Profile';
 import EditProfile from './EditProfile';
+import { CSSTransition } from 'react-transition-group';
+import gsap from 'gsap';
+import useWindowSize from '../functions/useWindowSize';
 
 function useData(id) {
   const [posts, setPosts] = useState(null);
@@ -20,10 +23,10 @@ function useData(id) {
       .collection('posts')
       .where('userId', '==', id)
       .orderBy('createdAt', 'desc')
-      .onSnapshot(snapshot => {
-        const newPosts = snapshot.docs.map(doc => ({
+      .onSnapshot((snapshot) => {
+        const newPosts = snapshot.docs.map((doc) => ({
           id: doc.id,
-          ...doc.data()
+          ...doc.data(),
         }));
         if (isSubscribed) setPosts(newPosts);
       });
@@ -43,6 +46,7 @@ const Profile = () => {
   const [isFollowed, setIsFollowed] = useState(false);
   const posts = useData(id);
   const [isActiveEditProfile, setIsActiveEditProfile] = useState(false);
+  const size = useWindowSize();
 
   useEffect(() => {
     let isSubscribed = true;
@@ -50,7 +54,7 @@ const Profile = () => {
       .firestore()
       .collection('users')
       .doc(id)
-      .onSnapshot(doc => {
+      .onSnapshot((doc) => {
         if (isSubscribed) {
           setUserData(doc.data());
           setIsFollowed(doc.data().followers.includes(currentUser.uid));
@@ -62,6 +66,36 @@ const Profile = () => {
     };
   }, [currentUser.uid, id]);
 
+  const onEnter = (node) => {
+    if (size.width <= 1024) {
+      gsap.from(node, {
+        x: '100%',
+        duration: 1,
+      });
+    } else {
+      gsap.from(node, {
+        scale: 0,
+        duration: 1,
+        autoAlpha: 0,
+      });
+    }
+  };
+
+  const onExit = (node) => {
+    if (size.width <= 1024) {
+      gsap.to(node, {
+        x: '100%',
+        duration: 1,
+      });
+    } else {
+      gsap.to(node, {
+        scale: 0,
+        duration: 1,
+        autoAlpha: 0,
+      });
+    }
+  };
+
   const addToFollowing = async () => {
     try {
       if (isFollowed) {
@@ -70,7 +104,7 @@ const Profile = () => {
           .collection('users')
           .doc(currentUser.uid)
           .update({
-            following: firebase.firestore.FieldValue.arrayRemove(id)
+            following: firebase.firestore.FieldValue.arrayRemove(id),
           });
         await firebase
           .firestore()
@@ -79,7 +113,7 @@ const Profile = () => {
           .update({
             followers: firebase.firestore.FieldValue.arrayRemove(
               currentUser.uid
-            )
+            ),
           });
       } else {
         await firebase
@@ -87,14 +121,16 @@ const Profile = () => {
           .collection('users')
           .doc(currentUser.uid)
           .update({
-            following: firebase.firestore.FieldValue.arrayUnion(id)
+            following: firebase.firestore.FieldValue.arrayUnion(id),
           });
         await firebase
           .firestore()
           .collection('users')
           .doc(id)
           .update({
-            followers: firebase.firestore.FieldValue.arrayUnion(currentUser.uid)
+            followers: firebase.firestore.FieldValue.arrayUnion(
+              currentUser.uid
+            ),
           });
         await firebase
           .firestore()
@@ -102,7 +138,7 @@ const Profile = () => {
           .add({
             users: [currentUser.uid, id],
             messages: [],
-            timestamp: null
+            timestamp: null,
           });
       }
     } catch (error) {
@@ -120,7 +156,8 @@ const Profile = () => {
             tabIndex={0}
             role="button"
             aria-label="More"
-            onKeyDown={e =>
+            style={{ cursor: 'pointer' }}
+            onKeyDown={(e) =>
               e.key === 'Enter' && setIsActiveEditProfile(!isActiveEditProfile)
             }
           />
@@ -157,11 +194,17 @@ const Profile = () => {
       )}
 
       <PostsList posts={posts} marginTop={'50px'} />
-      {isActiveEditProfile && (
+      <CSSTransition
+        in={isActiveEditProfile}
+        timeout={500}
+        unmountOnExit
+        onEnter={onEnter}
+        onExit={onExit}
+      >
         <EditProfile
           closeSection={() => setIsActiveEditProfile(!isActiveEditProfile)}
         />
-      )}
+      </CSSTransition>
     </Section>
   );
 };

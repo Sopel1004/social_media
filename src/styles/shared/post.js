@@ -15,9 +15,16 @@ const Date = styled.p`
 `;
 
 const Content = styled.p`
-  margin: 0;
+  margin: 0.25em 0;
   padding: 0.25em;
   grid-area: content;
+`;
+
+const Image = styled.img`
+  width: 100%;
+  margin: 0.25em 0 0.75em 0;
+  border-radius: 0.25em;
+  grid-area: image;
 `;
 
 const StyledPost = styled.article`
@@ -35,17 +42,18 @@ const StyledPost = styled.article`
     'avatar userName userName userName .'
     'avatar date date date .'
     'content content content content content'
+    'image image image image image'
     'likes likesNumber comments commentsNumber .';
 
   @media (min-width: 64em) {
     border: 1px solid ${COLORS.primaryDark};
     /*border-radius: 0.5em;*/
     border-radius: 0.5em;
-    border-bottom-left-radius: ${props =>
+    border-bottom-left-radius: ${(props) =>
       props.isCommentSectionActive ? '0' : '0.5em'};
-    border-bottom-right-radius: ${props =>
+    border-bottom-right-radius: ${(props) =>
       props.isCommentSectionActive ? '0' : '0.5em'};
-    border-bottom: ${props => props.isCommentSectionActive && 'none'};
+    border-bottom: ${(props) => props.isCommentSectionActive && 'none'};
   }
 `;
 
@@ -59,6 +67,7 @@ StyledPost.PostAvatar = PostAvatar;
 StyledPost.Name = Name;
 StyledPost.Date = Date;
 StyledPost.Content = Content;
+StyledPost.Image = Image;
 StyledPost.StyledLink = StyledLink;
 
 export default StyledPost;
