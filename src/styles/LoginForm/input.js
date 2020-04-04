@@ -6,12 +6,12 @@ const Input = styled.input`
   padding: 0.5em;
   border: 2px solid ${COLORS.primary};
   background-color: transparent;
-  border-radius: 2em;
+  border-radius: 1em;
   margin: 0.25em 0 1.25em 0;
   color: ${COLORS.sText};
 
   &:focus {
-    outline: 2px solid ${COLORS.secondaryContrast};
+    border: 2px solid ${COLORS.secondaryContrast};
   }
 
   @media (min-width: 64em) {

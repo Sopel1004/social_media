@@ -40,12 +40,12 @@ const LoginForm = ({ history, closeLoginForm }) => {
   };
   return (
     <StyledLoginForm>
-      <StyledLoginForm.LeftArrow
+      {/*<StyledLoginForm.LeftArrow
         onClick={closeLoginForm}
         tabIndex={0}
         aria-label="Back"
         role="button"
-      />
+      />*/}
       <StyledLoginForm.H2>Sign in</StyledLoginForm.H2>
       <StyledLoginForm.Form onSubmit={SignIn}>
         <label htmlFor="email">Email</label>
@@ -68,6 +68,12 @@ const LoginForm = ({ history, closeLoginForm }) => {
           <StyledLoginForm.ErrorMessage>{error}</StyledLoginForm.ErrorMessage>
         )}
         <StyledLoginForm.Button type="submit">Sign in</StyledLoginForm.Button>
+        <StyledLoginForm.Span>
+          New user?{'\t'}
+          <StyledLoginForm.DirectLink tabIndex={0} onClick={closeLoginForm}>
+            <b>Sign Up</b>
+          </StyledLoginForm.DirectLink>
+        </StyledLoginForm.Span>
       </StyledLoginForm.Form>
     </StyledLoginForm>
   );

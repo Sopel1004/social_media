@@ -52,12 +52,12 @@ const RegisterForm = ({ history, closeRegisterForm }) => {
 
   return (
     <StyledRegisterForm>
-      <StyledRegisterForm.LeftArrow
+      {/*<StyledRegisterForm.LeftArrow
         onClick={closeRegisterForm}
         tabIndex={0}
         aria-label="Back"
         role="button"
-      />
+      />*/}
       <StyledRegisterForm.H2>Create account</StyledRegisterForm.H2>
       <StyledRegisterForm.Form onSubmit={SignUp}>
         <label htmlFor="email">Email</label>
@@ -100,6 +100,15 @@ const RegisterForm = ({ history, closeRegisterForm }) => {
         <StyledRegisterForm.Button type="submit">
           Sign up
         </StyledRegisterForm.Button>
+        <StyledRegisterForm.Span>
+          Already, have a account?{'\t'}
+          <StyledRegisterForm.DirectLink
+            tabIndex={0}
+            onClick={closeRegisterForm}
+          >
+            <b>Sign In</b>
+          </StyledRegisterForm.DirectLink>
+        </StyledRegisterForm.Span>
       </StyledRegisterForm.Form>
     </StyledRegisterForm>
   );

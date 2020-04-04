@@ -12,15 +12,13 @@ const Button = styled.button`
   border-radius: 1em;
   margin-top: 1em;
   transition: all 0.5s ease;
-  &:focus {
-    outline: 2px solid ${COLORS.secondaryContrast};
-  }
 
   &:hover {
     cursor: pointer;
     opacity: 0.9;
     transform: scale(0.98);
   }
+
   @media (min-width: 64em) {
     background: linear-gradient(
       90deg,

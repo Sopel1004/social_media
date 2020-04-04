@@ -6,12 +6,14 @@ import WelcomeText from './welcomeText';
 const LoginPage = styled.section`
   width: 100vw;
   height: 100vh;
-  display: grid;
+  display: flex;
+  flex-direction: column;
   color: ${COLORS.sText};
-  grid-template-rows: 1fr auto auto auto 5em;
-  justify-items: center;
-  align-items: center;
+  justify-content: space-evenly;
+  align-items: flex-start;
   background: linear-gradient(135deg, #c94b4b 0%, #4b134f 100%);
+  overflow: hidden;
+  position: relative;
 `;
 
 LoginPage.Button = Button;
