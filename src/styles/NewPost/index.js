@@ -8,9 +8,26 @@ const Form = styled.form`
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 
+  @media (min-width: 64em) {
+    width: 50%;
+  }
+`;
+
+const Container = styled.div`
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: center;
+  justify-items: center;
+  padding: 0 0.5em;
+`;
+
+const Image = styled.img`
+  width: 75%;
+  border-radius: 0.5em;
   @media (min-width: 64em) {
     width: 50%;
   }
@@ -19,5 +36,7 @@ const Form = styled.form`
 Form.Textarea = Textarea;
 Form.Button = Button;
 Form.Label = Label;
+Form.Container = Container;
+Form.Image = Image;
 
 export default Form;

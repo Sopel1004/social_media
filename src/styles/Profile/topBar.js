@@ -6,7 +6,7 @@ const TopBar = styled.div`
   justify-content: space-between;
   align-items: center;
   position: relative;
-  padding: 0 0.5em;
+  padding: 0 0.5em 0 0;
   justify-items: center;
 
   @media (min-width: 64em) {

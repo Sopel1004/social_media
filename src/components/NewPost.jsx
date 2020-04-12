@@ -6,13 +6,27 @@ import Section from '../styles/shared/section';
 import H2 from '../styles/shared/h2';
 import Form from '../styles/NewPost';
 import { ReactComponent as ImageIcon } from '../images/image.svg';
-import { ReactComponent as CheckIcon } from '../images/check.svg';
+import { ReactComponent as DeleteIcon } from '../images/x.svg';
 
 const NewPost = () => {
   const [textAreaValue, setTextAreaValue] = useState('');
   const [file, setFile] = useState(null);
+  const [previewFile, setPreviewFile] = useState(null);
   const currentUser = useContext(UserContext);
   const history = useHistory();
+  console.log(file);
+  console.log(previewFile);
+
+  const handleFile = (file) => {
+    setFile(file);
+    setPreviewFile(URL.createObjectURL(file));
+  };
+
+  const deleteFile = (e) => {
+    e.preventDefault();
+    setFile(null);
+    setPreviewFile(null);
+  };
 
   const addPost = async (e) => {
     e.preventDefault();
@@ -104,36 +118,44 @@ const NewPost = () => {
       <Form onSubmit={addPost}>
         <Form.Textarea
           placeholder="Write something..."
-          rows="16"
+          rows="4"
           value={textAreaValue}
           onChange={(e) => setTextAreaValue(e.currentTarget.value)}
         />
-        <Form.Label htmlFor="fileInput" choosed={file !== null ? true : false}>
-          {file !== null ? (
-            <>
-              <CheckIcon />
-              Choosed
-            </>
-          ) : (
-            <>
-              <ImageIcon />
-              Add image
-            </>
-          )}
-        </Form.Label>
-        <input
-          type="file"
-          id="fileInput"
-          onChange={(e) => setFile(e.currentTarget.files[0])}
-          accept="image/*"
-          style={{ display: 'none' }}
-        />
-        <Form.Button
-          type="submit"
-          disabled={file === null && textAreaValue === '' ? true : false}
-        >
-          Post
-        </Form.Button>
+        {previewFile && <Form.Image src={previewFile} alt="addedPhoto" />}
+        <Form.Container>
+          <>
+            <span style={{ fontSize: '1.25em' }}>Add to post</span>
+
+            <Form.Label
+              htmlFor="fileInput"
+              choosed={file !== null ? true : false}
+            >
+              {file !== null ? (
+                <>
+                  <DeleteIcon onClick={deleteFile} />
+                </>
+              ) : (
+                <>
+                  <ImageIcon />
+                </>
+              )}
+            </Form.Label>
+            <input
+              type="file"
+              id="fileInput"
+              onChange={(e) => handleFile(e.currentTarget.files[0])}
+              accept="image/*"
+              style={{ display: 'none' }}
+            />
+          </>
+          <Form.Button
+            type="submit"
+            disabled={file === null && textAreaValue === '' ? true : false}
+          >
+            Post
+          </Form.Button>
+        </Form.Container>
       </Form>
     </Section>
   );
