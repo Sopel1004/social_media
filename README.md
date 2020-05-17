@@ -6,3 +6,8 @@ Web application created inspired on popular sites like Facebook, Instagram etc.
 
 -Styled-components
 
+-React Router
+
+-GSAP
+
+-Firebase
